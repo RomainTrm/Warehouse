@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98C9F84A-48D1-4F94-A728-AF212AE7A662}</ProjectGuid>
+    <ProjectGuid>{0F70309F-623C-4C8E-8FC1-C6F8FC526223}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Warehouse.Domain</RootNamespace>
-    <AssemblyName>Warehouse.Domain</AssemblyName>
+    <RootNamespace>Warehouse.DataAccess</RootNamespace>
+    <AssemblyName>Warehouse.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,24 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandBus.cs" />
-    <Compile Include="Commands\CommandBusException.cs" />
-    <Compile Include="Commands\HandlerException.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandBus.cs" />
-    <Compile Include="Commands\ICommandBusRegister.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\EventBus.cs" />
-    <Compile Include="Events\EventBusException.cs" />
-    <Compile Include="Events\IEventBus.cs" />
-    <Compile Include="Events\IEventBusRegister.cs" />
-    <Compile Include="Events\IEventHandler.cs" />
-    <Compile Include="Events\IEventStore.cs" />
+    <Compile Include="Events\EventContainer.cs" />
+    <Compile Include="Events\EventStore.cs" />
+    <Compile Include="Events\IDateTimeProvider.cs" />
+    <Compile Include="Events\IEventStoreAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj">
+      <Project>{98C9F84A-48D1-4F94-A728-AF212AE7A662}</Project>
+      <Name>Warehouse.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

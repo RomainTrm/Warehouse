@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{366D77C3-BB8A-4677-B89C-A7B6568D5B20}</ProjectGuid>
+    <ProjectGuid>{296458CC-B80B-4CD0-96F7-09BD4BE890E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Warehouse.Domain.Tests</RootNamespace>
-    <AssemblyName>Warehouse.Domain.Tests</AssemblyName>
+    <RootNamespace>Warehouse.DataAccess.Tests</RootNamespace>
+    <AssemblyName>Warehouse.DataAccess.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.5.28.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.28\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -58,11 +62,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Commands\CommandBusShould.cs" />
-    <Compile Include="Events\EventBusShould.cs" />
+    <Compile Include="Events\EventStoreShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Warehouse.DataAccess\Warehouse.DataAccess.csproj">
+      <Project>{0f70309f-623c-4c8e-8fc1-c6f8fc526223}</Project>
+      <Name>Warehouse.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj">
       <Project>{98c9f84a-48d1-4f94-a728-af212ae7a662}</Project>
       <Name>Warehouse.Domain</Name>
@@ -70,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
