@@ -45,12 +45,18 @@
     <Compile Include="Commands\HandlerException.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandBus.cs" />
+    <Compile Include="Commands\ICommandBusRegister.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\EventBus.cs" />
+    <Compile Include="Events\EventBusException.cs" />
+    <Compile Include="Events\IEventBus.cs" />
+    <Compile Include="Events\IEventBusRegister.cs" />
+    <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
