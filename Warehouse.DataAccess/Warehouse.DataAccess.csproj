@@ -41,10 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReadModels\GenericRepository.cs" />
-    <Compile Include="Events\EventContainer.cs" />
-    <Compile Include="Events\EventStore.cs" />
-    <Compile Include="Events\IDateTimeProvider.cs" />
-    <Compile Include="Events\IEventStoreAccess.cs" />
+    <Compile Include="Events\EventStoreFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

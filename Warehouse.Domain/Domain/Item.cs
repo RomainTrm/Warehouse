@@ -7,6 +7,8 @@ namespace Warehouse.Domain.Domain
 {
     public class Item : Aggregate
     {
+        private readonly List<Event> uncommitedEvents = new List<Event>();
+
         public Item(IEnumerable<Event> events) 
             : base(events)
         {
@@ -32,8 +34,19 @@ namespace Warehouse.Domain.Domain
             this.Name = itemRenamed.NewName;
         }
 
+        public void Rename(string newName)
+        {
+            this.Name = newName;
+            this.uncommitedEvents.Add(new ItemRenamed(this.Id, newName));
+        }
+
         public Guid Id { get; private set; }
 
         public string Name { get; private set; }
+
+        public IEnumerable<Event> UncommitedEvents
+        {
+            get { return this.uncommitedEvents; }
+        }
     }
 }

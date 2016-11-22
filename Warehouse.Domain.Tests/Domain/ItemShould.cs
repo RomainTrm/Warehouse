@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Moq;
 using NFluent;
 using NUnit.Framework;
@@ -16,7 +17,6 @@ namespace Warehouse.Domain.Tests.Domain
         public void HaveCorrectIdAndNameWhenProvideItemCreated()
         {
             var itemCreated = new ItemCreated("item name");
-
             var item = new Item(new[] { itemCreated });
 
             Check.That(item.Id).Equals(itemCreated.Id);
@@ -41,6 +41,18 @@ namespace Warehouse.Domain.Tests.Domain
             var itemCreated = new ItemCreated("item name");
             var events = new Event[] { itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name"), new Event1Fake() };
             Check.ThatCode(() => new Item(events)).DoesNotThrow();
+        }
+
+        [Test]
+        public void AddTouncommitedEventsItemRenamedWhenRename()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new[] { itemCreated });
+
+            item.Rename("new name");
+
+            Check.That(item.Name).Equals("new name");
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemRenamed(itemCreated.Id, "new name"));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Warehouse.Domain.Commands.Base;
+using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Commands.RenameItem
@@ -15,7 +16,13 @@ namespace Warehouse.Domain.Commands.RenameItem
 
         public void Handle(RenameItemCommand command)
         {
-            throw new NotImplementedException();
+            var item = new Item(this.eventStore.GetEventsById(command.ItemItemId));
+            item.Rename(command.NewName);
+
+            foreach (var uncommitedEvent in item.UncommitedEvents)
+            {
+                this.eventStore.Save(uncommitedEvent);
+            }
         }
     }
 }
