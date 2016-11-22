@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NFluent;
 using NUnit.Framework;
-using Warehouse.Domain.Events;
 using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Bus;
 using Warehouse.Domain.Events.Exceptions;

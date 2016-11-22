@@ -14,13 +14,13 @@ namespace Warehouse.Domain.Commands.Bus
         {
             if (commandHandler == null)
             {
-                throw new CommandBusException("Vous ne pouvez pas enregister un handler null.");
+                throw new CommandBusException("You can't register a null handler.");
             }
 
             var expectedHandlers = this.handlers.OfType<ICommandHandler<TCommand>>().ToArray();
             if (expectedHandlers.Any())
             {
-                throw new CommandBusException($"Plus de un handler pour ce type de command {nameof(TCommand)}.");
+                throw new CommandBusException($"There's already one handler registered for command type {nameof(TCommand)}.");
             }
 
             this.handlers.Add(commandHandler);
@@ -33,7 +33,7 @@ namespace Warehouse.Domain.Commands.Bus
 
             if (!expectedHandlers.Any())
             {
-                throw new CommandBusException($"Aucun handler pour ce type de command {nameof(TCommand)}.");
+                throw new CommandBusException($"There's no handler registered for command type {nameof(TCommand)}.");
             }
 
             expectedHandlers.Single().Handle(command);

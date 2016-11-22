@@ -2,7 +2,6 @@
 using Moq;
 using NUnit.Framework;
 using Warehouse.DataAccess.Events;
-using Warehouse.Domain.Events;
 using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.DataAccess.Tests.Events

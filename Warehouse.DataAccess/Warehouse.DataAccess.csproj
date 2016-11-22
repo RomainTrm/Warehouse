@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\GenericRepository.cs" />
     <Compile Include="Events\EventContainer.cs" />
     <Compile Include="Events\EventStore.cs" />
     <Compile Include="Events\IDateTimeProvider.cs" />
@@ -52,9 +53,7 @@
       <Name>Warehouse.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

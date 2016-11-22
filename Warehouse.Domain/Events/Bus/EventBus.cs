@@ -15,7 +15,7 @@ namespace Warehouse.Domain.Events.Bus
             var eventHandlers = this.handlers.OfType<IEventHandler<TEvent>>().ToArray();
             if (!eventHandlers.Any())
             {
-                throw new EventBusException($"Aucun handler pour l'event {@event.GetType()}"); 
+                throw new EventBusException($"There's no handler registered for command type {@event.GetType()}"); 
             }
 
             foreach (var eventHandler in eventHandlers)
@@ -28,7 +28,7 @@ namespace Warehouse.Domain.Events.Bus
         {
             if (eventHandler == null)
             {
-                throw new EventBusException("Vous ne pouvez pas enregister un handler null.");
+                throw new EventBusException("You can't register a null handler.");
             }
 
             this.handlers.Add(eventHandler);

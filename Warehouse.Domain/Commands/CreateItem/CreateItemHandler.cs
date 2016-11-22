@@ -3,7 +3,7 @@ using Warehouse.Domain.Commands.Exceptions;
 using Warehouse.Domain.Events;
 using Warehouse.Domain.Events.Base;
 
-namespace Warehouse.Domain.Commands
+namespace Warehouse.Domain.Commands.CreateItem
 {
     public class CreateItemHandler : ICommandHandler<CreateItemCommand>
     {
@@ -18,7 +18,7 @@ namespace Warehouse.Domain.Commands
         {
             if (string.IsNullOrEmpty(command.ItemName))
             {
-                throw new CommandHandlerException($"Le nom de l'item ne peut pas être vide pour la commande {nameof(CreateItemCommand)}");
+                throw new CommandHandlerException("You can't create an Item with an empty name.");
             }
 
             this.eventStore.Save(new ItemCreated(command.ItemName));

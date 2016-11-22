@@ -1,6 +1,6 @@
 ﻿using Warehouse.Domain.Commands.Base;
 
-namespace Warehouse.Domain.Commands
+namespace Warehouse.Domain.Commands.CreateItem
 {
     public class CreateItemCommand : ICommand
     {

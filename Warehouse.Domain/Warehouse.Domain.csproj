@@ -41,14 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Bus\CommandBus.cs" />
+    <Compile Include="Commands\CreateItem\CreateItemCommand.cs" />
     <Compile Include="Commands\Exceptions\CommandBusException.cs" />
-    <Compile Include="Commands\CreateItemCommand.cs" />
-    <Compile Include="Commands\CreateItemHandler.cs" />
     <Compile Include="Commands\Exceptions\CommandHandlerException.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Bus\ICommandBus.cs" />
     <Compile Include="Commands\Bus\ICommandBusRegister.cs" />
     <Compile Include="Commands\Base\ICommandHandler.cs" />
+    <Compile Include="Commands\CreateItem\CreateItemHandler.cs" />
+    <Compile Include="Domain\Base\IRepository.cs" />
+    <Compile Include="Domain\Item.cs" />
+    <Compile Include="Domain\ItemsList.cs" />
+    <Compile Include="Domain\Repositories\IItemsListRepository.cs" />
+    <Compile Include="Domain\Repositories\ItemsListRepository.cs" />
     <Compile Include="Events\Base\Event.cs" />
     <Compile Include="Events\Bus\EventBus.cs" />
     <Compile Include="Events\Exceptions\EventBusException.cs" />
@@ -59,9 +64,7 @@
     <Compile Include="Events\ItemCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

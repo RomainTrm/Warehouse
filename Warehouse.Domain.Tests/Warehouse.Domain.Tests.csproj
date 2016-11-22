@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Commands\CommandBusShould.cs" />
     <Compile Include="Commands\CreateItemHandlerShould.cs" />
+    <Compile Include="Domain\ItemsListShould.cs" />
+    <Compile Include="Domain\Repositories\ItemsListRepositoryShould.cs" />
     <Compile Include="Events\EventBusShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,9 +79,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
