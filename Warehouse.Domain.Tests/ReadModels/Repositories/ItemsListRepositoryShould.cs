@@ -2,12 +2,12 @@
 using Moq;
 using NFluent;
 using NUnit.Framework;
-using Warehouse.Domain.Domain;
-using Warehouse.Domain.Domain.Base;
-using Warehouse.Domain.Domain.Repositories;
 using Warehouse.Domain.Events;
+using Warehouse.Domain.ReadModels;
+using Warehouse.Domain.ReadModels.Base;
+using Warehouse.Domain.ReadModels.Repositories;
 
-namespace Warehouse.Domain.Tests.Domain.Repositories
+namespace Warehouse.Domain.Tests.ReadModels.Repositories
 {
     [TestFixture]
     public class ItemsListRepositoryShould
@@ -26,8 +26,8 @@ namespace Warehouse.Domain.Tests.Domain.Repositories
         [Test]
         public void RetriveItemsWhenGetItems()
         {
-            var items = new[] { new Item(Guid.NewGuid(), "item1"), new Item(Guid.NewGuid(), "item2") };
-            this.repositoryMock.Setup(x => x.Get<Item>()).Returns(items);
+            var items = new[] { new ItemView(Guid.NewGuid(), "item1"), new ItemView(Guid.NewGuid(), "item2") };
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(items);
 
             Check.That(this.itemsListRepository.GetItems()).Equals(items);
         }
@@ -37,7 +37,7 @@ namespace Warehouse.Domain.Tests.Domain.Repositories
         {
             var @event = new ItemCreated("item name");
             this.itemsListRepository.Handle(@event);
-            this.repositoryMock.Verify(x => x.Insert(new Item(@event.ItemId, @event.ItemName)));
+            this.repositoryMock.Verify(x => x.Insert(new ItemView(@event.Id, @event.Name)));
         }
     }
 }

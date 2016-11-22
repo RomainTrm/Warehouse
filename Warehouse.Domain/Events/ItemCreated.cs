@@ -5,14 +5,12 @@ namespace Warehouse.Domain.Events
 {
     public class ItemCreated : Event
     {
-        public ItemCreated(string itemName)
+        public ItemCreated(string name)
         {
-            this.ItemId = Guid.NewGuid();
-            this.ItemName = itemName;
+            this.Id = Guid.NewGuid();
+            this.Name = name;
         }
 
-        public Guid ItemId { get; }
-
-        public string ItemName { get; }
+        public string Name { get; }
     }
 }

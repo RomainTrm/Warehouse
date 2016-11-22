@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Warehouse.Domain.Domain.Base;
+using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events;
 using Warehouse.Domain.Events.Base;
+using Warehouse.Domain.ReadModels.Base;
 
-namespace Warehouse.Domain.Domain.Repositories
+namespace Warehouse.Domain.ReadModels.Repositories
 {
     public class ItemsListRepository : IItemsListRepository, IEventHandler<ItemCreated>
     {
@@ -14,14 +15,14 @@ namespace Warehouse.Domain.Domain.Repositories
             this.repository = repository;
         }
 
-        public IEnumerable<Item> GetItems()
+        public IEnumerable<ItemView> GetItems()
         {
-            return this.repository.Get<Item>();
+            return this.repository.Get<ItemView>();
         }
 
         public void Handle(ItemCreated @event)
         {
-            var newItem = new Item(@event.ItemId, @event.ItemName);
+            var newItem = new ItemView(@event.Id, @event.Name);
             this.repository.Insert(newItem);
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Warehouse.Domain.Domain.Base;
+using Warehouse.Domain.ReadModels.Base;
 
 namespace Warehouse.DataAccess.Domain
 {

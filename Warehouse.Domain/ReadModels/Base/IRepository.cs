@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Warehouse.Domain.Domain.Base
+namespace Warehouse.Domain.ReadModels.Base
 {
     public interface IRepository
     {

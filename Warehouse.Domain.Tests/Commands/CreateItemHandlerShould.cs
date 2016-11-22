@@ -26,7 +26,7 @@ namespace Warehouse.Domain.Tests.Commands
         public void SaveItemCreatedInEventStoreWhenHandleCreateItemCommand()
         {
             this.createItemHandler.Handle(new CreateItemCommand("item name"));
-            this.eventStoreMock.Verify(x => x.Save(It.Is<ItemCreated>(i => i.ItemName == "item name")));
+            this.eventStoreMock.Verify(x => x.Save(It.Is<ItemCreated>(i => i.Name == "item name")));
         }
 
         [Test]
