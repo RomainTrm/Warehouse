@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Warehouse.Domain.Commands.Base;
+using Warehouse.Domain.Commands.Exceptions;
 
-namespace Warehouse.Domain.Commands
+namespace Warehouse.Domain.Commands.Bus
 {
     public class CommandBus : ICommandBus, ICommandBusRegister
     {
@@ -18,7 +20,7 @@ namespace Warehouse.Domain.Commands
             var expectedHandlers = this.handlers.OfType<ICommandHandler<TCommand>>().ToArray();
             if (expectedHandlers.Any())
             {
-                throw new CommandBusException($"Plus de un handler pour ce type de command {typeof(TCommand)}.");
+                throw new CommandBusException($"Plus de un handler pour ce type de command {nameof(TCommand)}.");
             }
 
             this.handlers.Add(commandHandler);
@@ -31,7 +33,7 @@ namespace Warehouse.Domain.Commands
 
             if (!expectedHandlers.Any())
             {
-                throw new CommandBusException($"Aucun handler pour ce type de command {typeof(TCommand)}.");
+                throw new CommandBusException($"Aucun handler pour ce type de command {nameof(TCommand)}.");
             }
 
             expectedHandlers.Single().Handle(command);

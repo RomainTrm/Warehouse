@@ -1,5 +1,6 @@
 using System;
 using Warehouse.Domain.Events;
+using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.DataAccess.Events
 {

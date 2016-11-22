@@ -2,6 +2,9 @@
 using NFluent;
 using NUnit.Framework;
 using Warehouse.Domain.Commands;
+using Warehouse.Domain.Commands.Base;
+using Warehouse.Domain.Commands.Bus;
+using Warehouse.Domain.Commands.Exceptions;
 
 namespace Warehouse.Domain.Tests.Commands
 {
@@ -56,12 +59,12 @@ namespace Warehouse.Domain.Tests.Commands
         public void ThrowCommandHandlersExceptionWhenHandlerThrowsException()
         {
             var handler1Mock = new Mock<ICommandHandler<CommandFake1>>();
-            handler1Mock.Setup(x => x.Handle(It.IsAny<CommandFake1>())).Throws(new HandlerException());
+            handler1Mock.Setup(x => x.Handle(It.IsAny<CommandFake1>())).Throws(new CommandHandlerException("Error"));
 
             var commandBus = new CommandBus();
             commandBus.RegsiterHandler(handler1Mock.Object);
 
-            Check.ThatCode(() => commandBus.Send(new CommandFake1())).Throws<HandlerException>();
+            Check.ThatCode(() => commandBus.Send(new CommandFake1())).Throws<CommandHandlerException>();
         }
     }
 

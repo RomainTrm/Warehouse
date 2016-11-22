@@ -40,20 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandBus.cs" />
-    <Compile Include="Commands\CommandBusException.cs" />
-    <Compile Include="Commands\HandlerException.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandBus.cs" />
-    <Compile Include="Commands\ICommandBusRegister.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\EventBus.cs" />
-    <Compile Include="Events\EventBusException.cs" />
-    <Compile Include="Events\IEventBus.cs" />
-    <Compile Include="Events\IEventBusRegister.cs" />
-    <Compile Include="Events\IEventHandler.cs" />
-    <Compile Include="Events\IEventStore.cs" />
+    <Compile Include="Commands\Bus\CommandBus.cs" />
+    <Compile Include="Commands\Exceptions\CommandBusException.cs" />
+    <Compile Include="Commands\CreateItemCommand.cs" />
+    <Compile Include="Commands\CreateItemHandler.cs" />
+    <Compile Include="Commands\Exceptions\CommandHandlerException.cs" />
+    <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Bus\ICommandBus.cs" />
+    <Compile Include="Commands\Bus\ICommandBusRegister.cs" />
+    <Compile Include="Commands\Base\ICommandHandler.cs" />
+    <Compile Include="Events\Base\Event.cs" />
+    <Compile Include="Events\Bus\EventBus.cs" />
+    <Compile Include="Events\Exceptions\EventBusException.cs" />
+    <Compile Include="Events\Bus\IEventBus.cs" />
+    <Compile Include="Events\Bus\IEventBusRegister.cs" />
+    <Compile Include="Events\Base\IEventHandler.cs" />
+    <Compile Include="Events\Base\IEventStore.cs" />
+    <Compile Include="Events\ItemCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

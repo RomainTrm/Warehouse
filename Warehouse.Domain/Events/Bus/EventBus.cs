@@ -1,8 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Warehouse.Domain.Events.Base;
+using Warehouse.Domain.Events.Exceptions;
 
-namespace Warehouse.Domain.Events
+namespace Warehouse.Domain.Events.Bus
 {
     public class EventBus : IEventBus, IEventBusRegister
     {

@@ -1,4 +1,4 @@
-﻿namespace Warehouse.Domain.Commands
+﻿namespace Warehouse.Domain.Commands.Base
 {
     public interface ICommandHandler<in TCommand> : ICommandHandler
         where TCommand : ICommand

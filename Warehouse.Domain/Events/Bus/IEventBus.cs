@@ -1,4 +1,6 @@
-﻿namespace Warehouse.Domain.Events
+﻿using Warehouse.Domain.Events.Base;
+
+namespace Warehouse.Domain.Events.Bus
 {
     public interface IEventBus
     {

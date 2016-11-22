@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Warehouse.Domain.Commands
+namespace Warehouse.Domain.Commands.Exceptions
 {
     public class CommandBusException : Exception
     {

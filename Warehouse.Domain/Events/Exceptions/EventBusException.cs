@@ -1,6 +1,6 @@
 using System;
 
-namespace Warehouse.Domain.Events
+namespace Warehouse.Domain.Events.Exceptions
 {
     public class EventBusException : Exception
     {

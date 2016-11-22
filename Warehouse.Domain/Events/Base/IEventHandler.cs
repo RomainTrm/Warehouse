@@ -1,4 +1,4 @@
-﻿namespace Warehouse.Domain.Events
+﻿namespace Warehouse.Domain.Events.Base
 {
     public interface IEventHandler<in TEvent> : IEventHandler
         where TEvent : Event

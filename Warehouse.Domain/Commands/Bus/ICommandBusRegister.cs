@@ -1,4 +1,6 @@
-namespace Warehouse.Domain.Commands
+using Warehouse.Domain.Commands.Base;
+
+namespace Warehouse.Domain.Commands.Bus
 {
     public interface ICommandBusRegister
     {
