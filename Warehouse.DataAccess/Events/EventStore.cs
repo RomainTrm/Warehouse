@@ -1,4 +1,6 @@
-﻿using Warehouse.Domain.Events.Base;
+﻿using System;
+using System.Collections.Generic;
+using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.DataAccess.Events
 {
@@ -17,6 +19,11 @@ namespace Warehouse.DataAccess.Events
         {
             var container = new EventContainer(@event, this.dateTimeProvider.GetDateTime());
             this.eventStoreAccess.Push(container);
+        }
+
+        public IEnumerable<Event> GetEventsById(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

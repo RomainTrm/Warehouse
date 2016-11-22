@@ -50,6 +50,9 @@
     <Compile Include="Commands\Base\ICommandHandler.cs" />
     <Compile Include="Commands\CreateItem\CreateItemHandler.cs" />
     <Compile Include="Commands\RenameItem\RenameItemCommand.cs" />
+    <Compile Include="Commands\RenameItem\RenameItemHandler.cs" />
+    <Compile Include="Domain\Aggregate.cs" />
+    <Compile Include="Events\ItemRenamed.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />
     <Compile Include="ReadModels\ItemView.cs" />

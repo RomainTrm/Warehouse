@@ -1,35 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
+using Warehouse.Domain.Events;
+using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Domain
 {
-    public class Item
+    public class Item : Aggregate
     {
-        public Item(Guid itemId, string itemName)
+        public Item(IEnumerable<Event> events) 
+            : base(events)
         {
-            this.Id = itemId;
-            this.Name = itemName;
         }
 
-        public Guid Id { get; }
-
-        public string Name { get; }
-
-        public override bool Equals(object obj)
+        protected override IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents()
         {
-            return obj is Item && this.Equals((Item) obj);
-        }
-
-        private bool Equals(Item other)
-        {
-            return this.Id.Equals(other.Id) && string.Equals(this.Name, other.Name);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
+            return new Dictionary<Type, Action<Event>>
             {
-                return (this.Id.GetHashCode()*397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
-            }
+                { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
+                { typeof(ItemRenamed), e => this.ApplayItemRenamed((ItemRenamed)e) }
+            };
         }
+
+        private void ApplyItemCreated(ItemCreated itemCreated)
+        {
+            this.Id = itemCreated.Id;
+            this.Name = itemCreated.Name;
+        }
+
+        private void ApplayItemRenamed(ItemRenamed itemRenamed)
+        {
+            this.Name = itemRenamed.NewName;
+        }
+
+        public Guid Id { get; private set; }
+
+        public string Name { get; private set; }
     }
 }
