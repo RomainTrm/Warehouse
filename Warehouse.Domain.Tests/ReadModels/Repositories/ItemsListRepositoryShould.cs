@@ -33,11 +33,23 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
-        public void InsertNewItemWhenHandlerItemCreatedEvent()
+        public void InsertNewItemViewWhenHandleItemCreatedEvent()
         {
             var @event = new ItemCreated("item name");
             this.itemsListRepository.Handle(@event);
             this.repositoryMock.Verify(x => x.Insert(new ItemView(@event.Id, @event.Name)));
+        }
+
+        [Test]
+        public void ChangeItemViewNameAndUpdateWhenHandleItemRenamed()
+        {
+            var item = new ItemView(Guid.NewGuid(), "first name");
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+
+            this.itemsListRepository.Handle(new ItemRenamed(item.Id, "new name"));
+
+            Check.That(item.Name).Equals("new name");
+            this.repositoryMock.Verify(x => x.Update(item));
         }
     }
 }

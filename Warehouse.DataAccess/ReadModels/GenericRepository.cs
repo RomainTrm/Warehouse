@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Base;
 
 namespace Warehouse.DataAccess.ReadModels
@@ -10,6 +12,7 @@ namespace Warehouse.DataAccess.ReadModels
         private readonly Dictionary<Type, IEnumerable> readModels = new Dictionary<Type, IEnumerable>(); 
 
         public void Insert<TData>(TData data)
+             where TData : IReadModel
         {
             if (!this.readModels.ContainsKey(typeof (TData)))
             {
@@ -21,11 +24,15 @@ namespace Warehouse.DataAccess.ReadModels
         }
 
         public void Update<TData>(TData data)
+             where TData : IReadModel
         {
-            throw new NotImplementedException();
+            var datas = this.GetDatas<TData>();
+            var itemIdex = datas.IndexOf(datas.Single(x => x.Id == data.Id));
+            datas[itemIdex] = data;
         }
 
         public IEnumerable<TData> Get<TData>()
+             where TData : IReadModel
         {
             return this.GetDatas<TData>();
         }

@@ -22,5 +22,12 @@ namespace Warehouse.Domain.Domain
                 aggregatedEvents[itemEvent.GetType()].Invoke(itemEvent);
             }
         }
+
+        protected readonly List<Event> UncommitedEventsList = new List<Event>();
+
+        public IEnumerable<Event> UncommitedEvents
+        {
+            get { return this.UncommitedEventsList; }
+        }
     }
 }

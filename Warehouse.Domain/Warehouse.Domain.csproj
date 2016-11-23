@@ -52,9 +52,11 @@
     <Compile Include="Commands\RenameItem\RenameItemCommand.cs" />
     <Compile Include="Commands\RenameItem\RenameItemHandler.cs" />
     <Compile Include="Domain\Aggregate.cs" />
+    <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />
+    <Compile Include="ReadModels\IReadModel.cs" />
     <Compile Include="ReadModels\ItemView.cs" />
     <Compile Include="ReadModels\ItemsListView.cs" />
     <Compile Include="ReadModels\Repositories\IItemsListRepository.cs" />

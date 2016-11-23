@@ -1,5 +1,4 @@
-﻿using System;
-using Warehouse.Domain.Commands.Base;
+﻿using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events.Base;
 

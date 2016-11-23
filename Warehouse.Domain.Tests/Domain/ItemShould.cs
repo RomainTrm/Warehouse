@@ -44,7 +44,7 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
-        public void AddTouncommitedEventsItemRenamedWhenRename()
+        public void AddToUncommitedEventsItemRenamedWhenRename()
         {
             var itemCreated = new ItemCreated("item name");
             var item = new Item(new[] { itemCreated });
@@ -53,6 +53,17 @@ namespace Warehouse.Domain.Tests.Domain
 
             Check.That(item.Name).Equals("new name");
             Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemRenamed(itemCreated.Id, "new name"));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase((string)null)]
+        public void ThrowsDomainExceptionWhenRenameWithAnName(string newName)
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new[] { itemCreated });
+
+            Check.ThatCode(() => item.Rename(newName)).Throws<DomainException>();
         }
     }
 }

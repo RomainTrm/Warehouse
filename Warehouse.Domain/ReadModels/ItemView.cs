@@ -2,7 +2,7 @@
 
 namespace Warehouse.Domain.ReadModels
 {
-    public class ItemView
+    public class ItemView : IReadModel
     {
         public ItemView(Guid itemId, string itemName)
         {
@@ -12,7 +12,7 @@ namespace Warehouse.Domain.ReadModels
 
         public Guid Id { get; }
 
-        public string Name { get; }
+        public string Name { get; internal set; }
 
         public override bool Equals(object obj)
         {
