@@ -7,7 +7,7 @@ namespace Warehouse.Domain.Domain
 {
     public class Item : Aggregate
     {
-        public Item(IEnumerable<Event> events) 
+        public Item(IEnumerable<IEvent> events) 
             : base(events)
         {
         }
@@ -16,9 +16,9 @@ namespace Warehouse.Domain.Domain
 
         public string Name { get; private set; }
 
-        protected override IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents()
+        protected override IReadOnlyDictionary<Type, Action<IEvent>> GetAggregatedEvents()
         {
-            return new Dictionary<Type, Action<Event>>
+            return new Dictionary<Type, Action<IEvent>>
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
                 { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) }

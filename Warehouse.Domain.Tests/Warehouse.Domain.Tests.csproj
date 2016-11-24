@@ -70,8 +70,18 @@
     <Compile Include="ReadModels\Repositories\ItemsListRepositoryShould.cs" />
     <Compile Include="Events\EventBusShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\ManageItemsTypes.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageItemsTypes.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\ManageItemsTypesSteps.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Warehouse.DataAccess\Warehouse.DataAccess.csproj">
+      <Project>{0f70309f-623c-4c8e-8fc1-c6f8fc526223}</Project>
+      <Name>Warehouse.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj">
       <Project>{98c9f84a-48d1-4f94-a728-af212ae7a662}</Project>
       <Name>Warehouse.Domain</Name>
@@ -80,6 +90,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Scenarios\ManageItemsTypes.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ManageItemsTypes.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Choose>

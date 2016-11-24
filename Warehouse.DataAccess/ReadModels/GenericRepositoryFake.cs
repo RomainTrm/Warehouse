@@ -7,7 +7,7 @@ using Warehouse.Domain.ReadModels.Base;
 
 namespace Warehouse.DataAccess.ReadModels
 {
-    public class GenericRepository : IRepository
+    public class GenericRepositoryFake : IRepository
     {
         private readonly Dictionary<Type, IEnumerable> readModels = new Dictionary<Type, IEnumerable>(); 
 

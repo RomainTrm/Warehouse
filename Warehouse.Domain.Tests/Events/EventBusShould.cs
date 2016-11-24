@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 using Warehouse.Domain.Events.Base;
@@ -52,19 +53,26 @@ namespace Warehouse.Domain.Tests.Events
             var eventBus = new EventBus();
             eventBus.Register<Event1Fake>(eventHandlerFake);
             eventBus.Register<Event2Fake>(eventHandlerFake);
-            eventBus.Publish(new Event1Fake());
 
+            eventBus.Publish(new Event1Fake());
             handler1Mock.Verify(x => x.Handle(It.IsAny<Event1Fake>()), Times.Once);
             handler2Mock.Verify(x => x.Handle(It.IsAny<Event2Fake>()), Times.Never);
+
+            handler1Mock.ResetCalls();
+            eventBus.Publish(new Event2Fake());
+            handler1Mock.Verify(x => x.Handle(It.IsAny<Event1Fake>()), Times.Never);
+            handler2Mock.Verify(x => x.Handle(It.IsAny<Event2Fake>()), Times.Once);
         }
     }
 
-    public class Event1Fake : Event
+    public class Event1Fake : IEvent
     {
+        public Guid Id { get; }
     }
 
-    public class Event2Fake : Event
+    public class Event2Fake : IEvent
     {
+        public Guid Id { get; }
     }
 
     public class EventHandlerFake : IEventHandler<Event1Fake>, IEventHandler<Event2Fake>

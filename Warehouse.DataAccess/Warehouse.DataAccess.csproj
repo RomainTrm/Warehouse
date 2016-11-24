@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReadModels\GenericRepository.cs" />
+    <Compile Include="ReadModels\GenericRepositoryFake.cs" />
     <Compile Include="Events\EventStoreFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

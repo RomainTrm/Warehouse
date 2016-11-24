@@ -10,7 +10,7 @@ namespace Warehouse.Domain.Events.Bus
         private readonly List<IEventHandler> handlers = new List<IEventHandler>();
 
         public void Publish<TEvent>(TEvent @event)
-            where TEvent : Event
+            where TEvent : IEvent
         {
             var eventHandlers = this.handlers.OfType<IEventHandler<TEvent>>().ToArray();
             if (!eventHandlers.Any())
@@ -24,7 +24,7 @@ namespace Warehouse.Domain.Events.Bus
             }
         }
         
-        public void Register<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : Event
+        public void Register<TEvent>(IEventHandler<TEvent> eventHandler) where TEvent : IEvent
         {
             if (eventHandler == null)
             {
