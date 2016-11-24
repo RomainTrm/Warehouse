@@ -4,6 +4,11 @@ namespace Warehouse.Domain.Events.Base
 {
     public abstract class Event
     {
-        public Guid Id { get; protected set; }
+        protected Event(Guid id)
+        {
+            this.Id = id;
+        }
+
+        public Guid Id { get; private set; }
     }
 }

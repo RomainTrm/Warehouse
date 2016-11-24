@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 using Warehouse.Domain.Events.Base;
@@ -45,9 +46,15 @@ namespace Warehouse.Domain.Tests.Events
 
     public class Event1Fake : Event
     {
+        public Event1Fake() : base(Guid.NewGuid())
+        {
+        }
     }
 
     public class Event2Fake : Event
     {
+        public Event2Fake() : base(Guid.NewGuid())
+        {
+        }
     }
 }

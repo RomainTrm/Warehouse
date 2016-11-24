@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Commands\Bus\CommandBus.cs" />
     <Compile Include="Commands\CreateItem\CreateItemCommand.cs" />
+    <Compile Include="Commands\DisableItem\DisableItemHandler.cs" />
+    <Compile Include="Commands\DisableItem\DisableItemCommand.cs" />
     <Compile Include="Commands\Exceptions\CommandBusException.cs" />
     <Compile Include="Commands\Exceptions\CommandHandlerException.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Commands\RenameItem\RenameItemHandler.cs" />
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
+    <Compile Include="Events\ItemDisabled.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />

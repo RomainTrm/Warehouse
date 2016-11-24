@@ -16,12 +16,15 @@ namespace Warehouse.Domain.Domain
 
         public string Name { get; private set; }
 
+        public bool IsEnable { get; private set; }
+
         protected override IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents()
         {
             return new Dictionary<Type, Action<Event>>
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
-                { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) }
+                { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) },
+                { typeof(ItemDisabled), e => this.ApplyItemDisabled((ItemDisabled)e) }
             };
         }
 
@@ -29,11 +32,17 @@ namespace Warehouse.Domain.Domain
         {
             this.Id = itemCreated.Id;
             this.Name = itemCreated.Name;
+            this.IsEnable = true;
         }
 
         private void ApplyItemRenamed(ItemRenamed itemRenamed)
         {
             this.Name = itemRenamed.NewName;
+        }
+
+        private void ApplyItemDisabled(ItemDisabled itemDisabled)
+        {
+            this.IsEnable = false;
         }
 
         public void Rename(string newName)
@@ -45,6 +54,11 @@ namespace Warehouse.Domain.Domain
 
             this.Name = newName;
             this.UncommitedEventsList.Add(new ItemRenamed(this.Id, newName));
+        }
+
+        public void Disable()
+        {
+            this.UncommitedEventsList.Add(new ItemDisabled(this.Id));
         }
     }
 }

@@ -6,8 +6,8 @@ namespace Warehouse.Domain.Events
     public class ItemCreated : Event
     {
         public ItemCreated(string name)
+            : base(Guid.NewGuid())
         {
-            this.Id = Guid.NewGuid();
             this.Name = name;
         }
 

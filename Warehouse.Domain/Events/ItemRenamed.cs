@@ -6,8 +6,8 @@ namespace Warehouse.Domain.Events
     public class ItemRenamed : Event
     {
         public ItemRenamed(Guid itemId, string newName)
+            : base(itemId)
         {
-            this.Id = itemId;
             this.NewName = newName;
         }
 

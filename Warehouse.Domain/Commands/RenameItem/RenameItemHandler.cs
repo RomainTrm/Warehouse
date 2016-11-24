@@ -1,4 +1,5 @@
-﻿using Warehouse.Domain.Commands.Base;
+﻿using System.Linq;
+using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events.Base;
 
@@ -17,11 +18,7 @@ namespace Warehouse.Domain.Commands.RenameItem
         {
             var item = new Item(this.eventStore.GetEventsById(command.ItemItemId));
             item.Rename(command.NewName);
-
-            foreach (var uncommitedEvent in item.UncommitedEvents)
-            {
-                this.eventStore.Save(uncommitedEvent);
-            }
+            item.UncommitedEvents.ToList().ForEach(this.eventStore.Save);
         }
     }
 }

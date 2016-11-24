@@ -24,6 +24,16 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
+        public void BeEnableWhenProvideItemCreated()
+        {
+
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new[] { itemCreated });
+
+            Check.That(item.IsEnable).IsTrue();
+        }
+
+        [Test]
         public void HaveCorrectIdAndNameWhenProvideItemCreatedAndItemRenamed()
         {
             var itemCreated = new ItemCreated("item name");
@@ -33,6 +43,17 @@ namespace Warehouse.Domain.Tests.Domain
 
             Check.That(item.Id).Equals(itemCreated.Id);
             Check.That(item.Name).Equals("new item name");
+        }
+
+        [Test]
+        public void BeDisableWhenProvideItemCreatedAndItemDiabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) };
+            var item = new Item(events);
+
+            Check.That(item.IsEnable).IsFalse();
         }
 
         [Test]
@@ -64,6 +85,17 @@ namespace Warehouse.Domain.Tests.Domain
             var item = new Item(new[] { itemCreated });
 
             Check.ThatCode(() => item.Rename(newName)).Throws<DomainException>();
+        }
+
+        [Test]
+        public void AddToUncommitedEventsItemDisabledWhenDiasble()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new[] { itemCreated });
+
+            item.Disable();
+
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemDisabled(itemCreated.Id));
         }
     }
 }
