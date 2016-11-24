@@ -31,7 +31,10 @@ namespace Warehouse.Domain.Events.Bus
                 throw new EventBusException("You can't register a null handler.");
             }
 
-            this.handlers.Add(eventHandler);
+            if (!this.handlers.Contains(eventHandler))
+            {
+                this.handlers.Add(eventHandler); 
+            }
         }
     }
 }
