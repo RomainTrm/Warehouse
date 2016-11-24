@@ -9,5 +9,7 @@ namespace Warehouse.Domain.ReadModels.Base
         void Update<TData>(TData data) where TData : IReadModel;
 
         IEnumerable<TData> Get<TData>() where TData : IReadModel;
+
+        void Delete<TData>(TData data) where TData : IReadModel;
     }
 }

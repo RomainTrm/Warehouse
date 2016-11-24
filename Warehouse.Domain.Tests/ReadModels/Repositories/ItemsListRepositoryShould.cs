@@ -51,5 +51,16 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             Check.That(item.Name).Equals("new name");
             this.repositoryMock.Verify(x => x.Update(item));
         }
+
+        [Test]
+        public void RemoveItemWhenHandlerItemDisabled()
+        {
+            var item = new ItemView(Guid.NewGuid(), "first name");
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+
+            this.itemsListRepository.Handle(new ItemDisabled(item.Id));
+
+            this.repositoryMock.Verify(x => x.Delete(item));
+        }
     }
 }

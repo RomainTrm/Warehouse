@@ -37,6 +37,13 @@ namespace Warehouse.DataAccess.ReadModels
             return this.GetDatas<TData>();
         }
 
+        public void Delete<TData>(TData data) where TData : IReadModel
+        {
+            var datas = this.GetDatas<TData>();
+            var itemIdex = datas.IndexOf(datas.Single(x => x.Id == data.Id));
+            datas.RemoveAt(itemIdex);
+        }
+
         private List<TData> GetDatas<TData>()
         {
             return (List<TData>)this.readModels[typeof (TData)];
