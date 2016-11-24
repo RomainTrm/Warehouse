@@ -11,3 +11,9 @@ Scenario: Rename an item
 	Given I created an item "chair"
 	When I rename it "table"
 	Then I can see "table" item in my items list
+	
+Scenario: Rename an item with an empty name
+	Given I created an item "chair"
+	When I rename it ""
+	Then Rename fail
+	And I can see "chair" item in my items list

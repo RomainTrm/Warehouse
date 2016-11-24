@@ -2,11 +2,11 @@
 using System.Linq;
 using NFluent;
 using TechTalk.SpecFlow;
-using Warehouse.DataAccess.Events;
-using Warehouse.DataAccess.ReadModels;
+using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
 using Warehouse.Domain.Commands.RenameItem;
+using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events;
 using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Bus;
@@ -43,6 +43,12 @@ namespace Warehouse.Domain.Tests.Scenarios
             set { ScenarioContext.Current["ItemId"] = value; }
         }
 
+        private DomainException CatchedException
+        {
+            get { return (DomainException)ScenarioContext.Current["CatchedException"]; }
+            set { ScenarioContext.Current["CatchedException"] = value; }
+        }
+
         [BeforeScenario]
         public void Init()
         {
@@ -72,13 +78,19 @@ namespace Warehouse.Domain.Tests.Scenarios
         [When(@"I create a new item ""(.*)""")]
         public void WhenICreateANewItem(string itemName)
         {
-            this.CommandBus.Send(new CreateItemCommand(itemName));
+            this.SendCommand(new CreateItemCommand(itemName));
         }
 
         [When(@"I rename it ""(.*)""")]
         public void WhenIRenameIt(string itemName)
         {
-            this.CommandBus.Send(new RenameItemCommand(new ItemId(this.ItemId), itemName));
+            this.SendCommand(new RenameItemCommand(new ItemId(this.ItemId), itemName));
+        }
+
+        [Then(@"Rename fail")]
+        public void ThenRenameFail()
+        {
+            Check.That(this.CatchedException).IsNotNull();
         }
 
         [Then(@"I can see ""(.*)"" item in my items list")]
@@ -86,6 +98,19 @@ namespace Warehouse.Domain.Tests.Scenarios
         {
             var items = new ItemsListView(this.ItemsListRepository).Items;
             Check.That(items.Single().Name).Equals(itemName);
+        }
+
+        private void SendCommand<TCommand>(TCommand command)
+            where TCommand : ICommand
+        {
+            try
+            {
+                this.CommandBus.Send(command);
+            }
+            catch (DomainException ex)
+            {
+                this.CatchedException = ex;
+            }
         }
     }
 }

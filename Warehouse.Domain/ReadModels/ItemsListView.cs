@@ -5,13 +5,11 @@ namespace Warehouse.Domain.ReadModels
 {
     public class ItemsListView
     {
-        private readonly IItemsListRepository itemsListRepository;
-
         public ItemsListView(IItemsListRepository itemsListRepository)
         {
-            this.itemsListRepository = itemsListRepository;
+            this.Items = itemsListRepository.GetItems();
         }
 
-        public IEnumerable<ItemView> Items => this.itemsListRepository.GetItems();
+        public IEnumerable<ItemView> Items { get; }
     }
 }
