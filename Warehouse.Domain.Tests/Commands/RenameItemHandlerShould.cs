@@ -26,7 +26,7 @@ namespace Warehouse.Domain.Tests.Commands
         [Test]
         public void SaveItemRenamedToEventStore()
         {
-            this.renameItemHandler.Handle(new RenameItemCommand(this.itemCreated.Id, "new name"));
+            this.renameItemHandler.Handle(new RenameItemCommand(new ItemId(this.itemCreated.Id), "new name"));
             this.eventStoreMock.Verify(x => x.Save(It.Is<ItemRenamed>(e => e.Id == this.itemCreated.Id && e.NewName == "new name")));
         }
     }

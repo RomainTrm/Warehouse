@@ -28,7 +28,7 @@ namespace Warehouse.Domain.ReadModels.Repositories
 
         public void Handle(ItemRenamed @event)
         {
-            var itemView = this.repository.Get<ItemView>().Single(x => x.Id == @event.Id);
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Name = @event.NewName;
             this.repository.Update(itemView);
         }

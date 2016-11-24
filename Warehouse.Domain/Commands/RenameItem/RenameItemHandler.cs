@@ -17,7 +17,7 @@ namespace Warehouse.Domain.Commands.RenameItem
 
         public void Handle(RenameItemCommand command)
         {
-            var item = new Item(this.eventStore.GetEventsById(command.ItemItemId));
+            var item = new Item(this.eventStore.GetEventsById(command.ItemItemId.Value));
             item.Rename(command.NewName);
             this.eventStore.Save((ItemRenamed)item.UncommitedEvents.Single());
         }

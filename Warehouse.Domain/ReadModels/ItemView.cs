@@ -6,11 +6,11 @@ namespace Warehouse.Domain.ReadModels
     {
         public ItemView(Guid itemId, string itemName)
         {
-            this.Id = itemId;
+            this.Id = new ItemId(itemId);
             this.Name = itemName;
         }
 
-        public Guid Id { get; }
+        public ItemId Id { get; }
 
         public string Name { get; internal set; }
 

@@ -54,6 +54,7 @@
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
+    <Compile Include="ItemId.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />
     <Compile Include="ReadModels\IReadModel.cs" />

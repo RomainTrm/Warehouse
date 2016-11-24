@@ -78,7 +78,7 @@ namespace Warehouse.Domain.Tests.Scenarios
         [When(@"I rename it ""(.*)""")]
         public void WhenIRenameIt(string itemName)
         {
-            this.CommandBus.Send(new RenameItemCommand(this.ItemId, itemName));
+            this.CommandBus.Send(new RenameItemCommand(new ItemId(this.ItemId), itemName));
         }
 
         [Then(@"I can see ""(.*)"" item in my items list")]

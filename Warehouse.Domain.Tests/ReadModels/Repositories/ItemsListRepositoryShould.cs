@@ -46,7 +46,7 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             var item = new ItemView(Guid.NewGuid(), "first name");
             this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
 
-            this.itemsListRepository.Handle(new ItemRenamed(item.Id, "new name"));
+            this.itemsListRepository.Handle(new ItemRenamed(item.Id.Value, "new name"));
 
             Check.That(item.Name).Equals("new name");
             this.repositoryMock.Verify(x => x.Update(item));
