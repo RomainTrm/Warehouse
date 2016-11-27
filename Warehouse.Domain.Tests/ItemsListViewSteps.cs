@@ -6,6 +6,7 @@ using Warehouse.Domain.Commands.AddUnits;
 using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
+using Warehouse.Domain.Commands.RemoveUnits;
 using Warehouse.Domain.Commands.RenameItem;
 using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events;
@@ -61,6 +62,7 @@ namespace Warehouse.Domain.Tests
             eventBus.Register<ItemCreated>(itemListRepository);
             eventBus.Register<ItemRenamed>(itemListRepository);
             eventBus.Register<UnitsAdded>(itemListRepository);
+            eventBus.Register<UnitsRemoved>(itemListRepository);
 
             this.EventStore = new EventStoreFake(eventBus);
 
@@ -69,6 +71,7 @@ namespace Warehouse.Domain.Tests
             commandBus.RegsiterHandler(new CreateItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new RenameItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new AddUnitsHandler(this.EventStore));
+            commandBus.RegsiterHandler(new RemoveUnitsHandler(this.EventStore));
         }
 
         [Given(@"I created an item ""(.*)""")]
@@ -103,8 +106,14 @@ namespace Warehouse.Domain.Tests
             this.SendCommand(new AddUnitsCommand(new ItemId(this.ItemId), units));
         }
 
-        [Then(@"Rename fail")]
-        public void ThenRenameFail()
+        [When(@"I remove (.*) units")]
+        public void WhenIRemoveUnits(uint units)
+        {
+            this.SendCommand(new RemoveUnitsCommand(new ItemId(this.ItemId), units));
+        }
+
+        [Then(@"It fail")]
+        public void ThenItFail()
         {
             Check.That(this.CatchedException).IsNotNull();
         }

@@ -6,7 +6,7 @@ using Warehouse.Domain.ReadModels.Base;
 
 namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public class ItemsListRepository : IItemsListRepository, IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>
+    public class ItemsListRepository : IItemsListRepository, IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>
     {
         private readonly IRepository repository;
 
@@ -37,6 +37,13 @@ namespace Warehouse.Domain.ReadModels.Repositories
         {
             var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Units += @event.Units;
+            this.repository.Update(itemView);
+        }
+
+        public void Handle(UnitsRemoved @event)
+        {
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
+            itemView.Units -= @event.Units;
             this.repository.Update(itemView);
         }
     }

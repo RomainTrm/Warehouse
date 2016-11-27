@@ -15,7 +15,7 @@ Scenario: Rename an item
 Scenario: Rename an item with an empty name
 	Given I created an item "chair"
 	When I rename it ""
-	Then Rename fail
+	Then It fail
 	And I can see "chair" item in my items list
 
 Scenario: Add units to an item
@@ -23,3 +23,16 @@ Scenario: Add units to an item
 	And I added it 5 units
 	When I add 3 units
 	Then I can see "chair" items with 8 units in my items list
+
+Scenario: Remove units to an item
+	Given I created an item "chair"
+	And I added it 5 units
+	When I remove 3 units
+	Then I can see "chair" items with 2 units in my items list
+
+Scenario: Remove too much units to an item
+	Given I created an item "chair"
+	And I added it 5 units
+	When I remove 7 units
+	Then It fail
+	And I can see "chair" items with 5 units in my items list

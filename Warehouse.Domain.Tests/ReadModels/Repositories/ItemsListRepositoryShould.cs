@@ -3,6 +3,7 @@ using Moq;
 using NFluent;
 using NUnit.Framework;
 using Warehouse.Domain.Events;
+using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Base;
 using Warehouse.Domain.ReadModels.Repositories;
@@ -53,7 +54,7 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
-        public void ChandItemViewUnitsQuantityAndUpdateWhenHandleUnitsAdded()
+        public void ChangeItemViewUnitsQuantityAndUpdateWhenHandleUnitsAdded()
         {
             var item = new ItemView(Guid.NewGuid(), "first name") { Units = 5 };
             this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
@@ -61,6 +62,18 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             this.itemsListRepository.Handle(new UnitsAdded(item.Id.Value, 9));
 
             Check.That(item.Units).Equals((uint) 14);
+            this.repositoryMock.Verify(x => x.Update(item));
+        }
+
+        [Test]
+        public void ChangeItemViewUnitsQuantityAndUpdateWhenHandleUnitsRemoved()
+        {
+            var item = new ItemView(Guid.NewGuid(), "first name") { Units = 5 };
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+
+            this.itemsListRepository.Handle(new UnitsRemoved(item.Id.Value, 3));
+
+            Check.That(item.Units).Equals((uint)2);
             this.repositoryMock.Verify(x => x.Update(item));
         }
     }
