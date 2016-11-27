@@ -14,6 +14,8 @@ namespace Warehouse.Domain.ReadModels
 
         public string Name { get; internal set; }
 
+        public uint Units { get; internal set; }
+
         public override bool Equals(object obj)
         {
             return obj is ItemView && this.Equals((ItemView) obj);
@@ -21,14 +23,17 @@ namespace Warehouse.Domain.ReadModels
 
         private bool Equals(ItemView other)
         {
-            return this.Id.Equals(other.Id) && string.Equals(this.Name, other.Name);
+            return this.Id.Equals(other.Id) && string.Equals(this.Name, other.Name) && this.Units == other.Units;
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (this.Id.GetHashCode()*397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
+                var hashCode = this.Id?.GetHashCode() ?? 0;
+                hashCode = (hashCode*397) ^ (this.Name?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (int) this.Units;
+                return hashCode;
             }
         }
     }

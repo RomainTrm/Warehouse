@@ -2,6 +2,7 @@
 using System.Linq;
 using NFluent;
 using TechTalk.SpecFlow;
+using Warehouse.Domain.Commands.AddUnits;
 using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
@@ -59,6 +60,7 @@ namespace Warehouse.Domain.Tests
             var eventBus = new EventBus();
             eventBus.Register<ItemCreated>(itemListRepository);
             eventBus.Register<ItemRenamed>(itemListRepository);
+            eventBus.Register<UnitsAdded>(itemListRepository);
 
             this.EventStore = new EventStoreFake(eventBus);
 
@@ -66,6 +68,7 @@ namespace Warehouse.Domain.Tests
             this.CommandBus = commandBus;
             commandBus.RegsiterHandler(new CreateItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new RenameItemHandler(this.EventStore));
+            commandBus.RegsiterHandler(new AddUnitsHandler(this.EventStore));
         }
 
         [Given(@"I created an item ""(.*)""")]
@@ -74,6 +77,12 @@ namespace Warehouse.Domain.Tests
             var itemCreated = new ItemCreated(itemName);
             this.ItemId = itemCreated.Id;
             this.EventStore.Save(itemCreated);
+        }
+
+        [Given(@"I added it (.*) units")]
+        public void GivenIAddedItUnits(uint units)
+        {
+            this.EventStore.Save(new UnitsAdded(this.ItemId, units));
         }
 
         [When(@"I create a new item ""(.*)""")]
@@ -88,6 +97,12 @@ namespace Warehouse.Domain.Tests
             this.SendCommand(new RenameItemCommand(new ItemId(this.ItemId), itemName));
         }
 
+        [When(@"I add (.*) units")]
+        public void WhenIAddUnits(uint units)
+        {
+            this.SendCommand(new AddUnitsCommand(new ItemId(this.ItemId), units));
+        }
+
         [Then(@"Rename fail")]
         public void ThenRenameFail()
         {
@@ -99,6 +114,14 @@ namespace Warehouse.Domain.Tests
         {
             var items = new ItemsListView(this.ItemsListRepository).Items;
             Check.That(items.Single().Name).Equals(itemName);
+        }
+
+        [Then(@"I can see ""(.*)"" items with (.*) units in my items list")]
+        public void ThenICanSeeItemsWithUnitsInMyItemsList(string itemName, uint units)
+        {
+            var items = new ItemsListView(this.ItemsListRepository).Items;
+            Check.That(items.Single().Name).Equals(itemName);
+            Check.That(items.Single().Units).Equals(units);
         }
 
         private void SendCommand<TCommand>(TCommand command)
