@@ -51,12 +51,15 @@
     <Compile Include="Commands\Bus\ICommandBusRegister.cs" />
     <Compile Include="Commands\Base\ICommandHandler.cs" />
     <Compile Include="Commands\CreateItem\CreateItemHandler.cs" />
+    <Compile Include="Commands\RemoveUnits\RemoveUnitsCommand.cs" />
+    <Compile Include="Commands\RemoveUnits\RemoveUnitsHandler.cs" />
     <Compile Include="Commands\RenameItem\RenameItemCommand.cs" />
     <Compile Include="Commands\RenameItem\RenameItemHandler.cs" />
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
     <Compile Include="Events\UnitsAdded.cs" />
+    <Compile Include="Events\UnitsRemoved.cs" />
     <Compile Include="ItemId.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />

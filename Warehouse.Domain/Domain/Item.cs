@@ -24,7 +24,8 @@ namespace Warehouse.Domain.Domain
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
                 { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) },
-                { typeof(UnitsAdded), e => this.ApplyUnitsAdded((UnitsAdded)e) }
+                { typeof(UnitsAdded), e => this.ApplyUnitsAdded((UnitsAdded)e) },
+                { typeof(UnitsRemoved), e => this.ApplyUnitsRemoved((UnitsRemoved)e) }
             };
         }
 
@@ -44,6 +45,11 @@ namespace Warehouse.Domain.Domain
             this.Units += unitsAdded.Units;
         }
 
+        private void ApplyUnitsRemoved(UnitsRemoved unitsRemoved)
+        {
+            this.Units -= unitsRemoved.Units;
+        }
+
         public void Rename(string newName)
         {
             if (string.IsNullOrEmpty(newName))
@@ -51,14 +57,28 @@ namespace Warehouse.Domain.Domain
                 throw new DomainException("You can't set an empty name to an item.");
             }
 
-            this.Name = newName;
-            this.UncommitedEventsList.Add(new ItemRenamed(this.Id, newName));
+            var @event = new ItemRenamed(this.Id, newName);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyItemRenamed(@event);
         }
 
         public void AddUnits(uint units)
         {
-            this.Units += units;
-            this.UncommitedEventsList.Add(new UnitsAdded(this.Id, units));
+            var @event = new UnitsAdded(this.Id, units);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyUnitsAdded(@event);
+        }
+
+        public void RemoveUnits(uint units)
+        {
+            if (this.Units < units)
+            {
+                throw new DomainException("You can't have a total of units lower than zero.");
+            }
+
+            var @event = new UnitsRemoved(this.Id, units);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyUnitsRemoved(@event);
         }
     }
 }

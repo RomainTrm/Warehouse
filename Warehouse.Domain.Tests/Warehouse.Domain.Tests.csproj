@@ -65,6 +65,7 @@
     <Compile Include="Commands\AddUnitsHandlerShould.cs" />
     <Compile Include="Commands\CommandBusShould.cs" />
     <Compile Include="Commands\CreateItemHandlerShould.cs" />
+    <Compile Include="Commands\RemoveUnitsHandlerShould.cs" />
     <Compile Include="Commands\RenameItemHandlerShould.cs" />
     <Compile Include="Domain\ItemShould.cs" />
     <Compile Include="ReadModels\ItemsListViewShould.cs" />
