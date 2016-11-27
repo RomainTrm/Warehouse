@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Warehouse.Domain.Tests.Scenarios
+namespace Warehouse.Domain.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -18,20 +18,20 @@ namespace Warehouse.Domain.Tests.Scenarios
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("ManageItemsTypes")]
-    public partial class ManageItemsTypesFeature
+    [NUnit.Framework.DescriptionAttribute("ItemsListView")]
+    public partial class ItemsListViewFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "ManageItemsTypes.feature"
+#line 1 "ItemsListView.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ManageItemsTypes", "\tAs a used\r\n\tI want to administrate available items\r\n\tTo manage items types in my" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ItemsListView", "\tAs a used\r\n\tI want to administrate available items\r\n\tTo manage items types in my" +
                     " warehouse", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }

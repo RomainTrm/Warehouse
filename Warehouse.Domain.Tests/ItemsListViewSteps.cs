@@ -12,12 +12,13 @@ using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Bus;
 using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Repositories;
+using Warehouse.Domain.Tests.Fakes;
 
-namespace Warehouse.Domain.Tests.Scenarios
+namespace Warehouse.Domain.Tests
 {
     [Binding]
-    [Scope(Feature = "ManageItemsTypes")]
-    public class ManageItemsTypesSteps
+    [Scope(Feature = "ItemsListView")]
+    public class ItemsListViewSteps
     {
         private ICommandBus CommandBus
         {

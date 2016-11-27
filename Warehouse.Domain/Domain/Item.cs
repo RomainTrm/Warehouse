@@ -16,12 +16,15 @@ namespace Warehouse.Domain.Domain
 
         public string Name { get; private set; }
 
+        public uint Units { get; private set; }
+
         protected override IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents()
         {
             return new Dictionary<Type, Action<Event>>
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
-                { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) }
+                { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) },
+                { typeof(UnitsAdded), e => this.ApplyUnitsAdded((UnitsAdded)e) }
             };
         }
 
@@ -36,6 +39,11 @@ namespace Warehouse.Domain.Domain
             this.Name = itemRenamed.NewName;
         }
 
+        private void ApplyUnitsAdded(UnitsAdded unitsAdded)
+        {
+            this.Units += unitsAdded.Units;
+        }
+
         public void Rename(string newName)
         {
             if (string.IsNullOrEmpty(newName))
@@ -45,6 +53,12 @@ namespace Warehouse.Domain.Domain
 
             this.Name = newName;
             this.UncommitedEventsList.Add(new ItemRenamed(this.Id, newName));
+        }
+
+        public void AddUnits(uint units)
+        {
+            this.Units += units;
+            this.UncommitedEventsList.Add(new UnitsAdded(this.Id, units));
         }
     }
 }

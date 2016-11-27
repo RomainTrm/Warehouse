@@ -6,11 +6,11 @@ namespace Warehouse.Domain.Commands.RenameItem
     {
         public RenameItemCommand(ItemId itemId, string newName)
         {
-            this.ItemItemId = itemId;
+            this.ItemId = itemId;
             this.NewName = newName;
         }
 
-        public ItemId ItemItemId { get; }
+        public ItemId ItemId { get; }
 
         public string NewName { get; }
     }

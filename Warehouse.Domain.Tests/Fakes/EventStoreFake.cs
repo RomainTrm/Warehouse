@@ -4,7 +4,7 @@ using System.Linq;
 using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Bus;
 
-namespace Warehouse.Domain.Tests.Scenarios
+namespace Warehouse.Domain.Tests.Fakes
 {
     public class EventStoreFake : IEventStore
     {

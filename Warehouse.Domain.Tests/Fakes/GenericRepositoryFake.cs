@@ -5,7 +5,7 @@ using System.Linq;
 using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Base;
 
-namespace Warehouse.Domain.Tests.Scenarios
+namespace Warehouse.Domain.Tests.Fakes
 {
     public class GenericRepositoryFake : IRepository
     {

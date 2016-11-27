@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddUnits\AddUnitsCommand.cs" />
+    <Compile Include="Commands\AddUnits\AddUnitsHandler.cs" />
     <Compile Include="Commands\Bus\CommandBus.cs" />
     <Compile Include="Commands\CreateItem\CreateItemCommand.cs" />
     <Compile Include="Commands\Exceptions\CommandBusException.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
+    <Compile Include="Events\UnitsAdded.cs" />
     <Compile Include="ItemId.cs" />
     <Compile Include="ReadModels\Base\IRepository.cs" />
     <Compile Include="Domain\Item.cs" />

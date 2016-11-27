@@ -65,5 +65,30 @@ namespace Warehouse.Domain.Tests.Domain
 
             Check.ThatCode(() => item.Rename(newName)).Throws<DomainException>();
         }
+
+        [Test]
+        public void HaveCorrectUnitsQuantityWhenProvideUnitsAdded()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated, new UnitsAdded(It.IsAny<Guid>(), 6), new UnitsAdded(It.IsAny<Guid>(), 3) };
+            var item = new Item(events);
+
+            Check.That(item.Id).Equals(itemCreated.Id);
+            Check.That(item.Units).Equals((uint)9);
+        }
+
+        [Test]
+        public void AddToUncommitedEventsUnitsAddedWhenAddUnits()
+        {
+            const uint units = 6;
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 3) });
+
+            item.AddUnits(units);
+
+            Check.That(item.Units).Equals((uint)9);
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new UnitsAdded(itemCreated.Id, units));
+        }
     }
 }

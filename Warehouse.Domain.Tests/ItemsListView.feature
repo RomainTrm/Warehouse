@@ -1,4 +1,4 @@
-﻿Feature: ManageItemsTypes
+﻿Feature: ItemsListView
 	As a used
 	I want to administrate available items
 	To manage items types in my warehouse
