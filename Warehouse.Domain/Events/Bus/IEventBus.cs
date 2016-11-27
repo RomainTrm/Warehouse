@@ -4,7 +4,6 @@ namespace Warehouse.Domain.Events.Bus
 {
     public interface IEventBus
     {
-        void Publish<TEvent>(TEvent @event)
-            where TEvent : IEvent;
+        void Publish(Event @event);
     }
 }

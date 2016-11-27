@@ -3,15 +3,13 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Events
 {
-    public class ItemCreated : IEvent
+    public class ItemCreated : Event
     {
         public ItemCreated(string name)
+            : base(Guid.NewGuid())
         {
-            this.Id = Guid.NewGuid();
             this.Name = name;
         }
-
-        public Guid Id { get; }
 
         public string Name { get; }
     }

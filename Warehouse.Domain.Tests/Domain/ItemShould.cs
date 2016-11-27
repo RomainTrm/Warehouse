@@ -28,7 +28,7 @@ namespace Warehouse.Domain.Tests.Domain
         {
             var itemCreated = new ItemCreated("item name");
 
-            var events = new IEvent[] {itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name") };
+            var events = new Event[] {itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name") };
             var item = new Item(events);
 
             Check.That(item.Id).Equals(itemCreated.Id);
@@ -39,7 +39,7 @@ namespace Warehouse.Domain.Tests.Domain
         public void IgnoreUnexpectedEvents()
         {
             var itemCreated = new ItemCreated("item name");
-            var events = new IEvent[] { itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name"), new Event1Fake() };
+            var events = new Event[] { itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name"), new Event1Fake() };
             Check.ThatCode(() => new Item(events)).DoesNotThrow();
         }
 

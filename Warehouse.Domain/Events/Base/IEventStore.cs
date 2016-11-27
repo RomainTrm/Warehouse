@@ -5,8 +5,10 @@ namespace Warehouse.Domain.Events.Base
 {
     public interface IEventStore
     {
-        void Save<TEvent>(TEvent @event) where TEvent : IEvent;
+        void Save(Event @event);
 
-        IEnumerable<IEvent> GetEventsById(Guid id);
+        void Save(IEnumerable<Event> events);
+
+        IEnumerable<Event> GetEventsById(Guid id);
     }
 }

@@ -65,14 +65,22 @@ namespace Warehouse.Domain.Tests.Events
         }
     }
 
-    public class Event1Fake : IEvent
+    public class Event1Fake : Event
     {
         public Guid Id { get; }
+
+        public Event1Fake() : base(Guid.NewGuid())
+        {
+        }
     }
 
-    public class Event2Fake : IEvent
+    public class Event2Fake : Event
     {
         public Guid Id { get; }
+
+        public Event2Fake() : base(Guid.NewGuid())
+        {
+        }
     }
 
     public class EventHandlerFake : IEventHandler<Event1Fake>, IEventHandler<Event2Fake>

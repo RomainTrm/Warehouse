@@ -9,21 +9,28 @@ namespace Warehouse.Domain.Tests.Scenarios
     public class EventStoreFake : IEventStore
     {
         private readonly IEventBus eventBus;
-        private readonly List<IEvent> events = new List<IEvent>();
+        private readonly List<Event> events = new List<Event>();
 
         public EventStoreFake(IEventBus eventBus)
         {
             this.eventBus = eventBus;
         }
 
-        public void Save<TEvent>(TEvent @event) 
-            where TEvent : IEvent
+        public void Save(Event @event) 
         {
             this.events.Add(@event);
             this.eventBus.Publish(@event);
         }
 
-        public IEnumerable<IEvent> GetEventsById(Guid id)
+        public void Save(IEnumerable<Event> events)
+        {
+            foreach (var @event in events)
+            {
+                this.Save(@event);
+            }
+        }
+
+        public IEnumerable<Event> GetEventsById(Guid id)
         {
             return this.events.Where(evt => evt.Id.Equals(id)).ToArray();
         }

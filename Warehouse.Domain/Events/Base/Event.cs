@@ -2,8 +2,13 @@
 
 namespace Warehouse.Domain.Events.Base
 {
-    public interface IEvent
+    public abstract class Event
     {
-        Guid Id { get; }
+        protected Event(Guid id)
+        {
+            this.Id = id;
+        }
+
+        public Guid Id { get; }
     }
 }

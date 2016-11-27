@@ -7,15 +7,15 @@ namespace Warehouse.Domain.Domain
 {
     public abstract class Aggregate
     {
-        protected Aggregate(IEnumerable<IEvent> events)
+        protected Aggregate(IEnumerable<Event> events)
         {
             var aggregatedEvents = this.GetAggregatedEvents();
             this.ApplyEvents(events, aggregatedEvents);
         }
 
-        protected abstract IReadOnlyDictionary<Type, Action<IEvent>> GetAggregatedEvents();
+        protected abstract IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents();
 
-        private void ApplyEvents(IEnumerable<IEvent> itemEvents, IReadOnlyDictionary<Type, Action<IEvent>> aggregatedEvents)
+        private void ApplyEvents(IEnumerable<Event> itemEvents, IReadOnlyDictionary<Type, Action<Event>> aggregatedEvents)
         {
             foreach (var itemEvent in itemEvents.Where(evt => aggregatedEvents.ContainsKey(evt.GetType())))
             {
@@ -23,9 +23,9 @@ namespace Warehouse.Domain.Domain
             }
         }
 
-        protected readonly List<IEvent> UncommitedEventsList = new List<IEvent>();
+        protected readonly List<Event> UncommitedEventsList = new List<Event>();
 
-        public IEnumerable<IEvent> UncommitedEvents
+        public IEnumerable<Event> UncommitedEvents
         {
             get { return this.UncommitedEventsList; }
         }

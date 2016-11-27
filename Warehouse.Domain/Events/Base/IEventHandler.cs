@@ -1,7 +1,7 @@
 ﻿namespace Warehouse.Domain.Events.Base
 {
     public interface IEventHandler<in TEvent> : IEventHandler
-        where TEvent : IEvent
+        where TEvent : Event
     {
         void Handle(TEvent @event);
     }

@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Moq;
 using NUnit.Framework;
 using Warehouse.Domain.Commands.RenameItem;
 using Warehouse.Domain.Events;
@@ -27,7 +29,8 @@ namespace Warehouse.Domain.Tests.Commands
         public void SaveItemRenamedToEventStore()
         {
             this.renameItemHandler.Handle(new RenameItemCommand(new ItemId(this.itemCreated.Id), "new name"));
-            this.eventStoreMock.Verify(x => x.Save(It.Is<ItemRenamed>(e => e.Id == this.itemCreated.Id && e.NewName == "new name")));
+            this.eventStoreMock.Verify(x => x.Save(It.Is<IEnumerable<Event>>(e => e.Single().Id == this.itemCreated.Id 
+                                                                               && ((ItemRenamed)e.Single()).NewName == "new name")));
         }
     }
 }
