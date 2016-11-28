@@ -1,23 +1,22 @@
-﻿using System.Linq;
-using Warehouse.Domain.Commands.Base;
+﻿using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Domain;
 using Warehouse.Domain.Events.Base;
 
-namespace Warehouse.Domain.Commands.RenameItem
+namespace Warehouse.Domain.Commands.AddUnits
 {
-    public class RenameItemHandler : ICommandHandler<RenameItemCommand>
+    public class AddUnitsHandler : ICommandHandler<AddUnitsCommand>
     {
         private readonly IEventStore eventStore;
 
-        public RenameItemHandler(IEventStore eventStore)
+        public AddUnitsHandler(IEventStore eventStore)
         {
             this.eventStore = eventStore;
         }
 
-        public void Handle(RenameItemCommand command)
+        public void Handle(AddUnitsCommand command)
         {
             var item = new Item(this.eventStore.GetEventsById(command.ItemId.Value));
-            item.Rename(command.NewName);
+            item.AddUnits(command.Quantity);
             this.eventStore.Save(item.UncommitedEvents);
         }
     }

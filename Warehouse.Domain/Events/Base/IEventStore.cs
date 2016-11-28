@@ -7,6 +7,8 @@ namespace Warehouse.Domain.Events.Base
     {
         void Save(Event @event);
 
+        void Save(IEnumerable<Event> events);
+
         IEnumerable<Event> GetEventsById(Guid id);
     }
 }

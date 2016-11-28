@@ -62,15 +62,25 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\AddUnitsHandlerShould.cs" />
     <Compile Include="Commands\CommandBusShould.cs" />
     <Compile Include="Commands\CreateItemHandlerShould.cs" />
     <Compile Include="Commands\DisableItemHandlerShould.cs" />
+    <Compile Include="Commands\RemoveUnitsHandlerShould.cs" />
     <Compile Include="Commands\RenameItemHandlerShould.cs" />
     <Compile Include="Domain\ItemShould.cs" />
     <Compile Include="ReadModels\ItemsListViewShould.cs" />
     <Compile Include="ReadModels\Repositories\ItemsListRepositoryShould.cs" />
     <Compile Include="Events\EventBusShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Fakes\EventStoreFake.cs" />
+    <Compile Include="Fakes\GenericRepositoryFake.cs" />
+    <Compile Include="ItemsListView.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemsListView.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsListViewSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj">
@@ -81,6 +91,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="ItemsListView.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ItemsListView.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Choose>

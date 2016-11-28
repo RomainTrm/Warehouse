@@ -6,7 +6,7 @@ using Warehouse.Domain.ReadModels.Base;
 
 namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public class ItemsListRepository : IItemsListRepository, IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<ItemDisabled>
+    public class ItemsListRepository : IItemsListRepository, IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>, IEventHandler<ItemDisabled>
     {
         private readonly IRepository repository;
 
@@ -28,15 +28,29 @@ namespace Warehouse.Domain.ReadModels.Repositories
 
         public void Handle(ItemRenamed @event)
         {
-            var itemView = this.repository.Get<ItemView>().Single(x => x.Id == @event.Id);
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Name = @event.NewName;
             this.repository.Update(itemView);
         }
 
         public void Handle(ItemDisabled @event)
         {
-            var itemView = this.repository.Get<ItemView>().Single(x => x.Id == @event.Id);
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             this.repository.Delete(itemView);
+	    }
+
+        public void Handle(UnitsAdded @event)
+        {
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
+            itemView.Units += @event.Units;
+            this.repository.Update(itemView);
+        }
+
+        public void Handle(UnitsRemoved @event)
+        {
+            var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
+            itemView.Units -= @event.Units;
+            this.repository.Update(itemView);
         }
     }
 }

@@ -18,13 +18,17 @@ namespace Warehouse.Domain.Domain
 
         public bool IsEnable { get; private set; }
 
+        public uint Units { get; private set; }
+
         protected override IReadOnlyDictionary<Type, Action<Event>> GetAggregatedEvents()
         {
             return new Dictionary<Type, Action<Event>>
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
                 { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) },
-                { typeof(ItemDisabled), e => this.ApplyItemDisabled((ItemDisabled)e) }
+                { typeof(ItemDisabled), e => this.ApplyItemDisabled((ItemDisabled)e) },
+                { typeof(UnitsAdded), e => this.ApplyUnitsAdded((UnitsAdded)e) },
+                { typeof(UnitsRemoved), e => this.ApplyUnitsRemoved((UnitsRemoved)e) }
             };
         }
 
@@ -43,6 +47,16 @@ namespace Warehouse.Domain.Domain
         private void ApplyItemDisabled(ItemDisabled itemDisabled)
         {
             this.IsEnable = false;
+	}
+
+        private void ApplyUnitsAdded(UnitsAdded unitsAdded)
+        {
+            this.Units += unitsAdded.Units;
+        }
+
+        private void ApplyUnitsRemoved(UnitsRemoved unitsRemoved)
+        {
+            this.Units -= unitsRemoved.Units;
         }
 
         public void Rename(string newName)
@@ -52,13 +66,35 @@ namespace Warehouse.Domain.Domain
                 throw new DomainException("You can't set an empty name to an item.");
             }
 
-            this.Name = newName;
-            this.UncommitedEventsList.Add(new ItemRenamed(this.Id, newName));
+            var @event = new ItemRenamed(this.Id, newName);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyItemRenamed(@event);
+        }
+
+        public void AddUnits(uint units)
+        {
+            var @event = new UnitsAdded(this.Id, units);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyUnitsAdded(@event);
+        }
+
+        public void RemoveUnits(uint units)
+        {
+            if (this.Units < units)
+            {
+                throw new DomainException("You can't have a total of units lower than zero.");
+            }
+
+            var @event = new UnitsRemoved(this.Id, units);
+            this.UncommitedEventsList.Add(@event);
+            this.ApplyUnitsRemoved(@event);
         }
 
         public void Disable()
         {
-            this.UncommitedEventsList.Add(new ItemDisabled(this.Id));
+	    var @event = new ItemDisabled(this.Id);
+	    this.ApplyItemDisabled(@event);
+            this.UncommitedEventsList.Add(@event);
         }
     }
 }

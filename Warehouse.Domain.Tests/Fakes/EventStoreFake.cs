@@ -4,7 +4,7 @@ using System.Linq;
 using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Bus;
 
-namespace Warehouse.DataAccess.Events
+namespace Warehouse.Domain.Tests.Fakes
 {
     public class EventStoreFake : IEventStore
     {
@@ -16,7 +16,7 @@ namespace Warehouse.DataAccess.Events
             this.eventBus = eventBus;
         }
 
-        public void Save(Event @event)
+        public void Save(Event @event) 
         {
             this.events.Add(@event);
             this.eventBus.Publish(@event);

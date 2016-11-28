@@ -91,11 +91,70 @@ namespace Warehouse.Domain.Tests.Domain
         public void AddToUncommitedEventsItemDisabledWhenDiasble()
         {
             var itemCreated = new ItemCreated("item name");
-            var item = new Item(new[] { itemCreated });
+            var item = new Item(new[] {itemCreated});
 
             item.Disable();
 
             Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemDisabled(itemCreated.Id));
+        }
+
+        [Test]
+        public void HaveCorrectUnitsQuantityWhenProvideUnitsAdded()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated, new UnitsAdded(It.IsAny<Guid>(), 6), new UnitsAdded(It.IsAny<Guid>(), 3) };
+            var item = new Item(events);
+
+            Check.That(item.Id).Equals(itemCreated.Id);
+            Check.That(item.Units).Equals((uint)9);
+        }
+
+        [Test]
+        public void AddToUncommitedEventsUnitsAddedWhenAddUnits()
+        {
+            const uint units = 6;
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 3) });
+
+            item.AddUnits(units);
+
+            Check.That(item.Units).Equals((uint)9);
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new UnitsAdded(itemCreated.Id, units));
+        }
+
+        [Test]
+        public void HaveCorrectUnitsQuantityWhenProvideUnitsRemoved()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated, new UnitsAdded(It.IsAny<Guid>(), 6), new UnitsRemoved(It.IsAny<Guid>(), 2) };
+            var item = new Item(events);
+
+            Check.That(item.Id).Equals(itemCreated.Id);
+            Check.That(item.Units).Equals((uint)4);
+        }
+
+        [Test]
+        public void AddToUncommitedEventsUnitsRemovedWhenAddUnits()
+        {
+            const uint units = 3;
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 6) });
+
+            item.RemoveUnits(units);
+
+            Check.That(item.Units).Equals((uint)3);
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new UnitsRemoved(itemCreated.Id, units));
+        }
+
+        [Test]
+        public void ThrowsDomainExceptionWhenRemoveMoreUnitsThanExisting()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 2) });
+
+            Check.ThatCode(() => item.RemoveUnits(6)).Throws<DomainException>();
         }
     }
 }

@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.Events.Exceptions;
 
@@ -7,20 +7,19 @@ namespace Warehouse.Domain.Events.Bus
 {
     public class EventBus : IEventBus, IEventBusRegister
     {
-        private readonly List<IEventHandler> handlers = new List<IEventHandler>();
+        private readonly Dictionary<Type, List<Action<Event>>> handlers = new Dictionary<Type, List<Action<Event>>>();
 
-        public void Publish<TEvent>(TEvent @event)
-            where TEvent : Event
+        public void Publish(Event @event)
         {
-            var eventHandlers = this.handlers.OfType<IEventHandler<TEvent>>().ToArray();
-            if (!eventHandlers.Any())
+            var eventType = @event.GetType();
+            if (!this.handlers.ContainsKey(eventType))
             {
-                throw new EventBusException($"There's no handler registered for command type {@event.GetType()}"); 
+                throw new EventBusException($"There's no handler registered for command type {eventType}"); 
             }
 
-            foreach (var eventHandler in eventHandlers)
+            foreach (var eventHandler in this.handlers[eventType])
             {
-                eventHandler.Handle(@event);
+                eventHandler.Invoke(@event);
             }
         }
         
@@ -31,7 +30,13 @@ namespace Warehouse.Domain.Events.Bus
                 throw new EventBusException("You can't register a null handler.");
             }
 
-            this.handlers.Add(eventHandler);
+            var eventType = typeof (TEvent);
+            if (!this.handlers.ContainsKey(eventType))
+            {
+                this.handlers[eventType] = new List<Action<Event>>();
+            }
+
+            this.handlers[eventType].Add(@event => eventHandler.Handle((TEvent)@event));
         }
     }
 }

@@ -42,6 +42,27 @@ namespace Warehouse.Domain.Tests.Events
             handler2Mock.Verify(x => x.Handle(It.IsAny<Event1Fake>()), Times.Once);
             handler3Mock.Verify(x => x.Handle(It.IsAny<Event2Fake>()), Times.Never);
         }
+
+        [Test]
+        public void NotPublishTwiceWhenAnHandlerIsRegisteredTwiceForTwoDifferentEventsTypes()
+        {
+            var handler1Mock = new Mock<IEventHandler<Event1Fake>>();
+            var handler2Mock = new Mock<IEventHandler<Event2Fake>>();
+            var eventHandlerFake = new EventHandlerFake(handler1Mock, handler2Mock);
+
+            var eventBus = new EventBus();
+            eventBus.Register<Event1Fake>(eventHandlerFake);
+            eventBus.Register<Event2Fake>(eventHandlerFake);
+
+            eventBus.Publish(new Event1Fake());
+            handler1Mock.Verify(x => x.Handle(It.IsAny<Event1Fake>()), Times.Once);
+            handler2Mock.Verify(x => x.Handle(It.IsAny<Event2Fake>()), Times.Never);
+
+            handler1Mock.ResetCalls();
+            eventBus.Publish(new Event2Fake());
+            handler1Mock.Verify(x => x.Handle(It.IsAny<Event1Fake>()), Times.Never);
+            handler2Mock.Verify(x => x.Handle(It.IsAny<Event2Fake>()), Times.Once);
+        }
     }
 
     public class Event1Fake : Event
@@ -55,6 +76,28 @@ namespace Warehouse.Domain.Tests.Events
     {
         public Event2Fake() : base(Guid.NewGuid())
         {
+        }
+    }
+
+    public class EventHandlerFake : IEventHandler<Event1Fake>, IEventHandler<Event2Fake>
+    {
+        private readonly Mock<IEventHandler<Event1Fake>> mockHandler1;
+        private readonly Mock<IEventHandler<Event2Fake>> mockHandler2;
+
+        public EventHandlerFake(Mock<IEventHandler<Event1Fake>> mockHandler1, Mock<IEventHandler<Event2Fake>> mockHandler2)
+        {
+            this.mockHandler1 = mockHandler1;
+            this.mockHandler2 = mockHandler2;
+        }
+
+        public void Handle(Event1Fake @event)
+        {
+            this.mockHandler1.Object.Handle(@event);
+        }
+
+        public void Handle(Event2Fake @event)
+        {
+            this.mockHandler2.Object.Handle(@event);
         }
     }
 }

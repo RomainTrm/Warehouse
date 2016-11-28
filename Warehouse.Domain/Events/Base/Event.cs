@@ -9,6 +9,6 @@ namespace Warehouse.Domain.Events.Base
             this.Id = id;
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; }
     }
 }

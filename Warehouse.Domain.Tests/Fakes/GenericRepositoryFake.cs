@@ -5,9 +5,9 @@ using System.Linq;
 using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Base;
 
-namespace Warehouse.DataAccess.ReadModels
+namespace Warehouse.Domain.Tests.Fakes
 {
-    public class GenericRepository : IRepository
+    public class GenericRepositoryFake : IRepository
     {
         private readonly Dictionary<Type, IEnumerable> readModels = new Dictionary<Type, IEnumerable>(); 
 
@@ -27,7 +27,7 @@ namespace Warehouse.DataAccess.ReadModels
              where TData : IReadModel
         {
             var datas = this.GetDatas<TData>();
-            var itemIdex = datas.IndexOf(datas.Single(x => x.Id == data.Id));
+            var itemIdex = datas.IndexOf(datas.Single(x => Equals(x.Id, data.Id)));
             datas[itemIdex] = data;
         }
 
@@ -40,7 +40,7 @@ namespace Warehouse.DataAccess.ReadModels
         public void Delete<TData>(TData data) where TData : IReadModel
         {
             var datas = this.GetDatas<TData>();
-            var itemIdex = datas.IndexOf(datas.Single(x => x.Id == data.Id));
+            var itemIdex = datas.IndexOf(datas.Single(x => Equals(x.Id, data.Id)));
             datas.RemoveAt(itemIdex);
         }
 
