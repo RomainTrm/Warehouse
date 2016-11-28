@@ -6,6 +6,7 @@ using Warehouse.Domain.Commands.AddUnits;
 using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
+using Warehouse.Domain.Commands.DisableItem;
 using Warehouse.Domain.Commands.RemoveUnits;
 using Warehouse.Domain.Commands.RenameItem;
 using Warehouse.Domain.Domain;
@@ -63,6 +64,7 @@ namespace Warehouse.Domain.Tests
             eventBus.Register<ItemRenamed>(itemListRepository);
             eventBus.Register<UnitsAdded>(itemListRepository);
             eventBus.Register<UnitsRemoved>(itemListRepository);
+            eventBus.Register<ItemDisabled>(itemListRepository);
 
             this.EventStore = new EventStoreFake(eventBus);
 
@@ -72,6 +74,7 @@ namespace Warehouse.Domain.Tests
             commandBus.RegsiterHandler(new RenameItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new AddUnitsHandler(this.EventStore));
             commandBus.RegsiterHandler(new RemoveUnitsHandler(this.EventStore));
+            commandBus.RegsiterHandler(new DisableItemHandler(this.EventStore));
         }
 
         [Given(@"I created an item ""(.*)""")]
@@ -112,6 +115,12 @@ namespace Warehouse.Domain.Tests
             this.SendCommand(new RemoveUnitsCommand(new ItemId(this.ItemId), units));
         }
 
+        [When(@"I disable it")]
+        public void WhenIDisableIt()
+        {
+            this.SendCommand(new DisableItemCommand(new ItemId(this.ItemId)));
+        }
+
         [Then(@"It fail")]
         public void ThenItFail()
         {
@@ -131,6 +140,20 @@ namespace Warehouse.Domain.Tests
             var items = new ItemsListView(this.ItemsListRepository).Items;
             Check.That(items.Single().Name).Equals(itemName);
             Check.That(items.Single().Units).Equals(units);
+        }
+
+        [Then(@"I can't see ""(.*)"" item in my items list")]
+        public void ThenICanTSeeItemInMyItemsList(string itemName)
+        {
+            var items = new ItemsListView(this.ItemsListRepository).Items;
+            Check.That(items).IsEmpty();
+        }
+
+        [Then(@"I can see ""(.*)"" item in my disable items list")]
+        public void ThenICanSeeItemInMyDisableItemsList(string itemName)
+        {
+            var disableItems = new DisableItemsListView(this.ItemsListRepository).Items;
+            Check.That(disableItems.Single().Name).Equals(itemName);
         }
 
         private void SendCommand<TCommand>(TCommand command)

@@ -5,11 +5,11 @@ namespace Warehouse.Domain.Commands.DisableItem
 {
     public class DisableItemCommand : ICommand
     {
-        public DisableItemCommand(Guid itemId)
+        public DisableItemCommand(ItemId itemId)
         {
             this.ItemId = itemId;
         }
 
-        public Guid ItemId { get; }
+        public ItemId ItemId { get; }
     }
 }

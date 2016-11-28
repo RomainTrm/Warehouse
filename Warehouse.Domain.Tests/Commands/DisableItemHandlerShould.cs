@@ -26,7 +26,7 @@ namespace Warehouse.Domain.Tests.Commands
         [Test]
         public void SaveItemRenamedToEventStore()
         {
-            this.diableItemHandler.Handle(new DisableItemCommand(this.itemCreated.Id));
+            this.diableItemHandler.Handle(new DisableItemCommand(new ItemId(this.itemCreated.Id)));
             this.eventStoreMock.Verify(x => x.Save(It.Is<ItemDisabled>(e => e.Id == this.itemCreated.Id)));
         }
     }

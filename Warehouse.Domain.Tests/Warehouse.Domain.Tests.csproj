@@ -69,6 +69,7 @@
     <Compile Include="Commands\RemoveUnitsHandlerShould.cs" />
     <Compile Include="Commands\RenameItemHandlerShould.cs" />
     <Compile Include="Domain\ItemShould.cs" />
+    <Compile Include="ReadModels\DisableItemsListViewShould.cs" />
     <Compile Include="ReadModels\ItemsListViewShould.cs" />
     <Compile Include="ReadModels\Repositories\ItemsListRepositoryShould.cs" />
     <Compile Include="Events\EventBusShould.cs" />

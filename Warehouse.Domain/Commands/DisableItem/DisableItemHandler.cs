@@ -16,7 +16,7 @@ namespace Warehouse.Domain.Commands.DisableItem
 
         public void Handle(DisableItemCommand command)
         {
-            var item = new Item(this.eventStore.GetEventsById(command.ItemId));
+            var item = new Item(this.eventStore.GetEventsById(command.ItemId.Value));
             item.Disable();
             item.UncommitedEvents.ToList().ForEach(this.eventStore.Save);
         }

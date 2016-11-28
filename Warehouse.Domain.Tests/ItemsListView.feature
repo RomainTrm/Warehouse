@@ -36,3 +36,9 @@ Scenario: Remove too much units to an item
 	When I remove 7 units
 	Then It fail
 	And I can see "chair" items with 5 units in my items list
+
+Scenario: Disable an item
+	Given I created an item "chair"
+	When I disable it
+	Then I can't see "chair" item in my items list
+	And I can see "chair" item in my disable items list

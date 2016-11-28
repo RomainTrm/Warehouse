@@ -11,7 +11,7 @@ namespace Warehouse.Domain.Tests.ReadModels
     public class ItemsListViewShould
     {
         [Test]
-        public void ReturnItemsFormItemsListRepository()
+        public void ReturnItemsFromItemsListRepository()
         {
             var items = new[] { new ItemView(Guid.NewGuid(), "item1"), new ItemView(Guid.NewGuid(), "item2") };
             var repositoryMock = new Mock<IItemsListRepository>();

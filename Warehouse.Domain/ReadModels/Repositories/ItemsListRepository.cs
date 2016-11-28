@@ -20,6 +20,11 @@ namespace Warehouse.Domain.ReadModels.Repositories
             return this.repository.Get<ItemView>();
         }
 
+        public IEnumerable<DisableItemView> GetDisableItems()
+        {
+            return this.repository.Get<DisableItemView>();
+        }
+
         public void Handle(ItemCreated @event)
         {
             var newItem = new ItemView(@event.Id, @event.Name);
@@ -37,6 +42,7 @@ namespace Warehouse.Domain.ReadModels.Repositories
         {
             var itemView = this.repository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             this.repository.Delete(itemView);
+            this.repository.Insert(new DisableItemView(itemView.Id.Value, itemView.Name));
 	    }
 
         public void Handle(UnitsAdded @event)

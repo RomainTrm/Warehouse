@@ -3,7 +3,6 @@ using Moq;
 using NFluent;
 using NUnit.Framework;
 using Warehouse.Domain.Events;
-using Warehouse.Domain.Events.Base;
 using Warehouse.Domain.ReadModels;
 using Warehouse.Domain.ReadModels.Base;
 using Warehouse.Domain.ReadModels.Repositories;
@@ -34,6 +33,15 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
+        public void RetriveDisableItemsWhenGetDisableItems()
+        {
+            var items = new[] { new DisableItemView(Guid.NewGuid(), "item1"), new DisableItemView(Guid.NewGuid(), "item2") };
+            this.repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(items);
+
+            Check.That(this.itemsListRepository.GetDisableItems()).Equals(items);
+        }
+
+        [Test]
         public void InsertNewItemViewWhenHandleItemCreatedEvent()
         {
             var @event = new ItemCreated("item name");
@@ -54,7 +62,7 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
-        public void RemoveItemWhenHandlerItemDisabled()
+        public void RemoveItemAndAddItemToDisableItemsWhenHandlerItemDisabled()
         {
             var item = new ItemView(Guid.NewGuid(), "first name");
             this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] {item});
@@ -62,6 +70,7 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             this.itemsListRepository.Handle(new ItemDisabled(item.Id.Value));
 
             this.repositoryMock.Verify(x => x.Delete(item));
+            this.repositoryMock.Verify(x => x.Insert(new DisableItemView(item.Id.Value, "first name")));
         }
 
         [Test]
