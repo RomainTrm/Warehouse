@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Warehouse.Domain.ReadModels;
-using Warehouse.Domain.ReadModels.Base;
+using Warehouse.Domain.ReadModels.Repositories;
 
-namespace Warehouse.Domain.Tests.Fakes
+namespace Warehouse.DataAccess.ReadModels
 {
-    public class GenericRepositoryFake : IRepository
+    public class GenericReadModelRepositoryFake : IReadModelRepository
     {
         private readonly Dictionary<Type, IEnumerable> readModels = new Dictionary<Type, IEnumerable>(); 
 

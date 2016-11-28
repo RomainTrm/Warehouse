@@ -5,9 +5,9 @@ namespace Warehouse.Domain.ReadModels
 {
     public class DisableItemsListView
     {
-        public DisableItemsListView(IItemsListRepository itemsListRepository)
+        public DisableItemsListView(IReadModelRepository readModelRepository)
         {
-            this.Items = itemsListRepository.GetDisableItems();
+            this.Items = readModelRepository.Get<DisableItemView>();
         }
 
         public IEnumerable<DisableItemView> Items { get; }

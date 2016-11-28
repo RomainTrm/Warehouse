@@ -71,11 +71,11 @@
     <Compile Include="Domain\ItemShould.cs" />
     <Compile Include="ReadModels\DisableItemsListViewShould.cs" />
     <Compile Include="ReadModels\ItemsListViewShould.cs" />
-    <Compile Include="ReadModels\Repositories\ItemsListRepositoryShould.cs" />
+    <Compile Include="ReadModels\Repositories\ViewModelGeneratorShould.cs" />
     <Compile Include="Events\EventBusShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fakes\EventStoreFake.cs" />
-    <Compile Include="Fakes\GenericRepositoryFake.cs" />
+    <Compile Include="Fakes\GenericReadModelRepositoryFake.cs" />
     <Compile Include="ItemsListView.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

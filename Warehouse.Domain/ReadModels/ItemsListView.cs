@@ -5,9 +5,9 @@ namespace Warehouse.Domain.ReadModels
 {
     public class ItemsListView
     {
-        public ItemsListView(IItemsListRepository itemsListRepository)
+        public ItemsListView(IReadModelRepository readModelRepository)
         {
-            this.Items = itemsListRepository.GetItems();
+            this.Items = readModelRepository.Get<ItemView>();
         }
 
         public IEnumerable<ItemView> Items { get; }

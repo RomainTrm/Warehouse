@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Warehouse.Domain.ReadModels.Base
+namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public interface IRepository
+    public interface IReadModelRepository
     {
         void Insert<TData>(TData data) where TData : IReadModel;
 

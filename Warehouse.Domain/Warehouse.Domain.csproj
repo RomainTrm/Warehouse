@@ -64,15 +64,14 @@
     <Compile Include="Events\UnitsAdded.cs" />
     <Compile Include="Events\UnitsRemoved.cs" />
     <Compile Include="ItemId.cs" />
-    <Compile Include="ReadModels\Base\IRepository.cs" />
+    <Compile Include="ReadModels\Repositories\IReadModelRepository.cs" />
     <Compile Include="Domain\Item.cs" />
     <Compile Include="ReadModels\DisableItemsListView.cs" />
     <Compile Include="ReadModels\DisableItemView.cs" />
     <Compile Include="ReadModels\IReadModel.cs" />
     <Compile Include="ReadModels\ItemView.cs" />
     <Compile Include="ReadModels\ItemsListView.cs" />
-    <Compile Include="ReadModels\Repositories\IItemsListRepository.cs" />
-    <Compile Include="ReadModels\Repositories\ItemsListRepository.cs" />
+    <Compile Include="ReadModels\Repositories\ViewModelGenerator.cs" />
     <Compile Include="Events\Base\Event.cs" />
     <Compile Include="Events\Bus\EventBus.cs" />
     <Compile Include="Events\Exceptions\EventBusException.cs" />

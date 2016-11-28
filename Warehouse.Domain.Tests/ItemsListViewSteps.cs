@@ -35,9 +35,9 @@ namespace Warehouse.Domain.Tests
             set { ScenarioContext.Current["EventStore"] = value; }
         }
 
-        private IItemsListRepository ItemsListRepository
+        private IReadModelRepository ReadModelRepository
         {
-            get { return (IItemsListRepository)ScenarioContext.Current["ItemsListRepository"]; }
+            get { return (IReadModelRepository)ScenarioContext.Current["ItemsListRepository"]; }
             set { ScenarioContext.Current["ItemsListRepository"] = value; }
         }
 
@@ -56,15 +56,15 @@ namespace Warehouse.Domain.Tests
         [BeforeScenario]
         public void Init()
         {
-            var itemListRepository = new ItemsListRepository(new GenericRepositoryFake());
-            this.ItemsListRepository = itemListRepository;
+            this.ReadModelRepository = new GenericReadModelRepositoryFake();
+            var viewModelGenerator = new ViewModelGenerator(this.ReadModelRepository);
 
             var eventBus = new EventBus();
-            eventBus.Register<ItemCreated>(itemListRepository);
-            eventBus.Register<ItemRenamed>(itemListRepository);
-            eventBus.Register<UnitsAdded>(itemListRepository);
-            eventBus.Register<UnitsRemoved>(itemListRepository);
-            eventBus.Register<ItemDisabled>(itemListRepository);
+            eventBus.Register<ItemCreated>(viewModelGenerator);
+            eventBus.Register<ItemRenamed>(viewModelGenerator);
+            eventBus.Register<UnitsAdded>(viewModelGenerator);
+            eventBus.Register<UnitsRemoved>(viewModelGenerator);
+            eventBus.Register<ItemDisabled>(viewModelGenerator);
 
             this.EventStore = new EventStoreFake(eventBus);
 
@@ -130,14 +130,14 @@ namespace Warehouse.Domain.Tests
         [Then(@"I can see ""(.*)"" item in my items list")]
         public void ThenICanSeeItemInMyItemsList(string itemName)
         {
-            var items = new ItemsListView(this.ItemsListRepository).Items;
+            var items = new ItemsListView(this.ReadModelRepository).Items;
             Check.That(items.Single().Name).Equals(itemName);
         }
 
         [Then(@"I can see ""(.*)"" items with (.*) units in my items list")]
         public void ThenICanSeeItemsWithUnitsInMyItemsList(string itemName, uint units)
         {
-            var items = new ItemsListView(this.ItemsListRepository).Items;
+            var items = new ItemsListView(this.ReadModelRepository).Items;
             Check.That(items.Single().Name).Equals(itemName);
             Check.That(items.Single().Units).Equals(units);
         }
@@ -145,14 +145,14 @@ namespace Warehouse.Domain.Tests
         [Then(@"I can't see ""(.*)"" item in my items list")]
         public void ThenICanTSeeItemInMyItemsList(string itemName)
         {
-            var items = new ItemsListView(this.ItemsListRepository).Items;
+            var items = new ItemsListView(this.ReadModelRepository).Items;
             Check.That(items).IsEmpty();
         }
 
         [Then(@"I can see ""(.*)"" item in my disable items list")]
         public void ThenICanSeeItemInMyDisableItemsList(string itemName)
         {
-            var disableItems = new DisableItemsListView(this.ItemsListRepository).Items;
+            var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
             Check.That(disableItems.Single().Name).Equals(itemName);
         }
 

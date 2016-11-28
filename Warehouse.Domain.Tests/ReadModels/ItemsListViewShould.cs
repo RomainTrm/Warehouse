@@ -11,11 +11,11 @@ namespace Warehouse.Domain.Tests.ReadModels
     public class ItemsListViewShould
     {
         [Test]
-        public void ReturnItemsFromItemsListRepository()
+        public void ReturnItemsFromReadModelRepository()
         {
             var items = new[] { new ItemView(Guid.NewGuid(), "item1"), new ItemView(Guid.NewGuid(), "item2") };
-            var repositoryMock = new Mock<IItemsListRepository>();
-            repositoryMock.Setup(x => x.GetItems()).Returns(items);
+            var repositoryMock = new Mock<IReadModelRepository>();
+            repositoryMock.Setup(x => x.Get<ItemView>()).Returns(items);
 
             Check.That(new ItemsListView(repositoryMock.Object).Items).Equals(items);
         }

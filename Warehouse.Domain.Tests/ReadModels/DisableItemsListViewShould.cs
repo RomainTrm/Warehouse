@@ -11,11 +11,11 @@ namespace Warehouse.Domain.Tests.ReadModels
     public class DisableItemsListViewShould
     {
         [Test]
-        public void ReturnDisableItemsFromItemsListRepository()
+        public void ReturnDisableItemsFromReadModelRepository()
         {
             var itemId = Guid.NewGuid();
-            var repositoryMock = new Mock<IItemsListRepository>();
-            repositoryMock.Setup(x => x.GetDisableItems()).Returns(new[] { new DisableItemView(itemId, "chair") });
+            var repositoryMock = new Mock<IReadModelRepository>();
+            repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(new[] { new DisableItemView(itemId, "chair") });
 
             var disableItemsListView = new DisableItemsListView(repositoryMock.Object);
             Check.That(disableItemsListView.Items).ContainsExactly(new DisableItemView(itemId, "chair"));
