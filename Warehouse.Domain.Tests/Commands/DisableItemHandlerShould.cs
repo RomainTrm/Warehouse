@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Moq;
 using NUnit.Framework;
 using Warehouse.Domain.Commands.DisableItem;
 using Warehouse.Domain.Events;
@@ -13,21 +15,21 @@ namespace Warehouse.Domain.Tests.Commands
 
         private Mock<IEventStore> eventStoreMock;
 
-        private DisableItemHandler diableItemHandler;
+        private DisableItemHandler disableItemHandler;
 
         [SetUp]
         public void Init()
         {
             this.eventStoreMock = new Mock<IEventStore>();
             this.eventStoreMock.Setup(x => x.GetEventsById(this.itemCreated.Id)).Returns(new[] { this.itemCreated });
-            this.diableItemHandler = new DisableItemHandler(this.eventStoreMock.Object);
+            this.disableItemHandler = new DisableItemHandler(this.eventStoreMock.Object);
         }
 
         [Test]
-        public void SaveItemRenamedToEventStore()
+        public void SaveItemDisabledToEventStore()
         {
-            this.diableItemHandler.Handle(new DisableItemCommand(new ItemId(this.itemCreated.Id)));
-            this.eventStoreMock.Verify(x => x.Save(It.Is<ItemDisabled>(e => e.Id == this.itemCreated.Id)));
+            this.disableItemHandler.Handle(new DisableItemCommand(new ItemId(this.itemCreated.Id)));
+            this.eventStoreMock.Verify(x => x.Save(It.Is<IEnumerable<Event>>(events => events.Single() is ItemDisabled && events.Single().Id == this.itemCreated.Id)));
         }
     }
 }

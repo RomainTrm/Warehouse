@@ -7,7 +7,7 @@ namespace Warehouse.Domain.Domain
 {
     public class Item : Aggregate
     {
-        public Item(IEnumerable<Event> events) 
+        public Item(IEnumerable<Event> events)
             : base(events)
         {
         }
@@ -26,7 +26,8 @@ namespace Warehouse.Domain.Domain
             {
                 { typeof(ItemCreated), e => this.ApplyItemCreated((ItemCreated)e) },
                 { typeof(ItemRenamed), e => this.ApplyItemRenamed((ItemRenamed)e) },
-                { typeof(ItemDisabled), e => this.ApplyItemDisabled((ItemDisabled)e) },
+                { typeof(ItemDisabled), e => this.ApplyItemDisabled() },
+                { typeof(ItemEnabled), e => this.ApplyItemEnabled() },
                 { typeof(UnitsAdded), e => this.ApplyUnitsAdded((UnitsAdded)e) },
                 { typeof(UnitsRemoved), e => this.ApplyUnitsRemoved((UnitsRemoved)e) }
             };
@@ -44,10 +45,15 @@ namespace Warehouse.Domain.Domain
             this.Name = itemRenamed.NewName;
         }
 
-        private void ApplyItemDisabled(ItemDisabled itemDisabled)
+        private void ApplyItemDisabled()
         {
             this.IsEnable = false;
-	}
+        }
+
+        private void ApplyItemEnabled()
+        {
+            this.IsEnable = true;
+        }
 
         private void ApplyUnitsAdded(UnitsAdded unitsAdded)
         {
@@ -92,8 +98,25 @@ namespace Warehouse.Domain.Domain
 
         public void Disable()
         {
-	    var @event = new ItemDisabled(this.Id);
-	    this.ApplyItemDisabled(@event);
+            if (!this.IsEnable)
+            {
+                throw new DomainException("You can't disable an item when it's already disable.");
+            }
+
+            var @event = new ItemDisabled(this.Id);
+            this.ApplyItemDisabled();
+            this.UncommitedEventsList.Add(@event);
+        }
+
+        public void Enable()
+        {
+            if (this.IsEnable)
+            {
+                throw new DomainException("You can't enble an item when it's already enable.");
+            }
+
+            var @event = new ItemEnabled(this.Id);
+            this.ApplyItemEnabled();
             this.UncommitedEventsList.Add(@event);
         }
     }

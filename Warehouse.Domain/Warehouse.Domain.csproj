@@ -46,6 +46,8 @@
     <Compile Include="Commands\CreateItem\CreateItemCommand.cs" />
     <Compile Include="Commands\DisableItem\DisableItemHandler.cs" />
     <Compile Include="Commands\DisableItem\DisableItemCommand.cs" />
+    <Compile Include="Commands\EnableItem\EnableItemCommand.cs" />
+    <Compile Include="Commands\EnableItem\EnableItemHandler.cs" />
     <Compile Include="Commands\Exceptions\CommandBusException.cs" />
     <Compile Include="Commands\Exceptions\CommandHandlerException.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Events\ItemDisabled.cs" />
+    <Compile Include="Events\ItemEnabled.cs" />
     <Compile Include="Events\ItemRenamed.cs" />
     <Compile Include="Events\UnitsAdded.cs" />
     <Compile Include="Events\UnitsRemoved.cs" />

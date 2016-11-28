@@ -38,7 +38,7 @@ namespace Warehouse.Domain.Tests.Domain
         {
             var itemCreated = new ItemCreated("item name");
 
-            var events = new Event[] {itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name") };
+            var events = new Event[] { itemCreated, new ItemRenamed(It.IsAny<Guid>(), "new item name") };
             var item = new Item(events);
 
             Check.That(item.Id).Equals(itemCreated.Id);
@@ -88,14 +88,45 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
-        public void AddToUncommitedEventsItemDisabledWhenDiasble()
+        public void AddToUncommitedEventsItemDisabledWhenDisable()
         {
             var itemCreated = new ItemCreated("item name");
-            var item = new Item(new[] {itemCreated});
+            var item = new Item(new[] { itemCreated });
 
             item.Disable();
 
+            Check.That(item.IsEnable).IsFalse();
             Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemDisabled(itemCreated.Id));
+        }
+
+        [Test]
+        public void ThrowsDomainExceptionWhenDisableAndItemIsAlreadyDisabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) });
+
+            Check.ThatCode(() => item.Disable()).Throws<DomainException>();
+        }
+
+        [Test]
+        public void AddToUncommitedEventsItemEnabledWhenEnable()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) });
+
+            item.Enable();
+
+            Check.That(item.IsEnable).IsTrue();
+            Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemEnabled(itemCreated.Id));
+        }
+
+        [Test]
+        public void ThrowsDomainExceptionWhenEnableAndItemIsAlreadyEnabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated });
+
+            Check.ThatCode(() => item.Enable()).Throws<DomainException>();
         }
 
         [Test]
