@@ -42,3 +42,10 @@ Scenario: Disable an item
 	When I disable it
 	Then I can't see "chair" item in my items list
 	And I can see "chair" item in my disable items list
+	
+Scenario: Enable an item
+	Given I created an item "chair"
+	And I disabled it
+	When I enable it
+	Then I can see "chair" item in my items list
+	And I can't see "chair" item in my disable items list

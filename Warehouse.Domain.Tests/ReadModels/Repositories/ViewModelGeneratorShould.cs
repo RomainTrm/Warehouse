@@ -55,6 +55,18 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
+        public void RemoveDisableItemAndAddItemToItemsWhenHandlerItemEnabled()
+        {
+            var disableItem = new DisableItemView(Guid.NewGuid(), "first name");
+            this.repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(new[] { disableItem });
+
+            this.viewModelGenerator.Handle(new ItemEnabled(disableItem.Id.Value));
+
+            this.repositoryMock.Verify(x => x.Delete(disableItem));
+            this.repositoryMock.Verify(x => x.Insert(new ItemView(disableItem.Id.Value, "first name")));
+        }
+
+        [Test]
         public void ChangeItemViewUnitsQuantityAndUpdateWhenHandleUnitsAdded()
         {
             var item = new ItemView(Guid.NewGuid(), "first name") { Units = 5 };

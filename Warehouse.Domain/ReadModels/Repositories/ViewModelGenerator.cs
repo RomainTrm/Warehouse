@@ -4,7 +4,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public class ViewModelGenerator : IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>, IEventHandler<ItemDisabled>
+    public class ViewModelGenerator : IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>, IEventHandler<ItemDisabled>, IEventHandler<ItemEnabled>
     {
         private readonly IReadModelRepository readModelRepository;
 
@@ -32,6 +32,13 @@ namespace Warehouse.Domain.ReadModels.Repositories
             this.readModelRepository.Delete(itemView);
             this.readModelRepository.Insert(new DisableItemView(itemView.Id.Value, itemView.Name));
 	    }
+
+        public void Handle(ItemEnabled @event)
+        {
+            var disableItemView = this.readModelRepository.Get<DisableItemView>().Single(x => x.Id.Value == @event.Id);
+            this.readModelRepository.Delete(disableItemView);
+            this.readModelRepository.Insert(new ItemView(disableItemView.Id.Value, disableItemView.Name));
+        }
 
         public void Handle(UnitsAdded @event)
         {

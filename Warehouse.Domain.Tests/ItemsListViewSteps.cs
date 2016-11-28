@@ -7,6 +7,7 @@ using Warehouse.Domain.Commands.Base;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
 using Warehouse.Domain.Commands.DisableItem;
+using Warehouse.Domain.Commands.EnableItem;
 using Warehouse.Domain.Commands.RemoveUnits;
 using Warehouse.Domain.Commands.RenameItem;
 using Warehouse.Domain.Domain;
@@ -65,16 +66,17 @@ namespace Warehouse.Domain.Tests
             eventBus.Register<UnitsAdded>(viewModelGenerator);
             eventBus.Register<UnitsRemoved>(viewModelGenerator);
             eventBus.Register<ItemDisabled>(viewModelGenerator);
-
+            eventBus.Register<ItemEnabled>(viewModelGenerator);
             this.EventStore = new EventStoreFake(eventBus);
 
             var commandBus = new CommandBus();
-            this.CommandBus = commandBus;
             commandBus.RegsiterHandler(new CreateItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new RenameItemHandler(this.EventStore));
             commandBus.RegsiterHandler(new AddUnitsHandler(this.EventStore));
             commandBus.RegsiterHandler(new RemoveUnitsHandler(this.EventStore));
             commandBus.RegsiterHandler(new DisableItemHandler(this.EventStore));
+            commandBus.RegsiterHandler(new EnableItemHandler(this.EventStore));
+            this.CommandBus = commandBus;
         }
 
         [Given(@"I created an item ""(.*)""")]
@@ -89,6 +91,12 @@ namespace Warehouse.Domain.Tests
         public void GivenIAddedItUnits(uint units)
         {
             this.EventStore.Save(new UnitsAdded(this.ItemId, units));
+        }
+
+        [Given(@"I disabled it")]
+        public void GivenIDisabledIt()
+        {
+            this.EventStore.Save(new ItemDisabled(this.ItemId));
         }
 
         [When(@"I create a new item ""(.*)""")]
@@ -119,6 +127,12 @@ namespace Warehouse.Domain.Tests
         public void WhenIDisableIt()
         {
             this.SendCommand(new DisableItemCommand(new ItemId(this.ItemId)));
+        }
+        
+        [When(@"I enable it")]
+        public void WhenIEnableIt()
+        {
+            this.SendCommand(new EnableItemCommand(new ItemId(this.ItemId)));
         }
 
         [Then(@"It fail")]
@@ -154,6 +168,13 @@ namespace Warehouse.Domain.Tests
         {
             var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
             Check.That(disableItems.Single().Name).Equals(itemName);
+        }
+        
+        [Then(@"I can't see ""(.*)"" item in my disable items list")]
+        public void ThenICanTSeeItemInMyDisableItemsList(string p0)
+        {
+            var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
+            Check.That(disableItems).IsEmpty();
         }
 
         private void SendCommand<TCommand>(TCommand command)
