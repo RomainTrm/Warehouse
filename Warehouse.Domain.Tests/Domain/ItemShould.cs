@@ -57,6 +57,17 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
+        public void BeEnableWhenProvideItemCreatedAndItemEnabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated, new ItemDisabled(itemCreated.Id), new ItemEnabled(itemCreated.Id) };
+            var item = new Item(events);
+
+            Check.That(item.IsEnable).IsTrue();
+        }
+
+        [Test]
         public void IgnoreUnexpectedEvents()
         {
             var itemCreated = new ItemCreated("item name");
