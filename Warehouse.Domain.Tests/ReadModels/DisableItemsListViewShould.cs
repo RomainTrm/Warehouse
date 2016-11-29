@@ -14,7 +14,7 @@ namespace Warehouse.Domain.Tests.ReadModels
         public void ReturnDisableItemsFromReadModelRepository()
         {
             var itemId = Guid.NewGuid();
-            var repositoryMock = new Mock<IReadModelRepository>();
+            var repositoryMock = new Mock<IReadModelReadOnlyRepository>();
             repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(new[] { new DisableItemView(itemId, "chair") });
 
             var disableItemsListView = new DisableItemsListView(repositoryMock.Object);

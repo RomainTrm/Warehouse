@@ -16,7 +16,7 @@ namespace Warehouse.Domain.Domain
 
         public string Name { get; private set; }
 
-        public bool IsEnable { get; private set; }
+        public bool IsEnabled { get; private set; }
 
         public uint Units { get; private set; }
 
@@ -37,7 +37,7 @@ namespace Warehouse.Domain.Domain
         {
             this.Id = itemCreated.Id;
             this.Name = itemCreated.Name;
-            this.IsEnable = true;
+            this.IsEnabled = true;
         }
 
         private void ApplyItemRenamed(ItemRenamed itemRenamed)
@@ -47,12 +47,12 @@ namespace Warehouse.Domain.Domain
 
         private void ApplyItemDisabled()
         {
-            this.IsEnable = false;
+            this.IsEnabled = false;
         }
 
         private void ApplyItemEnabled()
         {
-            this.IsEnable = true;
+            this.IsEnabled = true;
         }
 
         private void ApplyUnitsAdded(UnitsAdded unitsAdded)
@@ -63,6 +63,11 @@ namespace Warehouse.Domain.Domain
         private void ApplyUnitsRemoved(UnitsRemoved unitsRemoved)
         {
             this.Units -= unitsRemoved.Units;
+        }
+
+        private bool IsDisabled()
+        {
+            return !this.IsEnabled;
         }
 
         public void Rename(string newName)
@@ -79,6 +84,11 @@ namespace Warehouse.Domain.Domain
 
         public void AddUnits(uint units)
         {
+            if (this.IsDisabled())
+            {
+                throw new DomainException("You can't add units to a disabled item.");
+            }
+
             var @event = new UnitsAdded(this.Id, units);
             this.UncommitedEventsList.Add(@event);
             this.ApplyUnitsAdded(@event);
@@ -86,6 +96,11 @@ namespace Warehouse.Domain.Domain
 
         public void RemoveUnits(uint units)
         {
+            if (this.IsDisabled())
+            {
+                throw new DomainException("You can't remove units to a disabled item.");
+            }
+
             if (this.Units < units)
             {
                 throw new DomainException("You can't have a total of units lower than zero.");
@@ -98,9 +113,14 @@ namespace Warehouse.Domain.Domain
 
         public void Disable()
         {
-            if (!this.IsEnable)
+            if (this.IsDisabled())
             {
                 throw new DomainException("You can't disable an item when it's already disable.");
+            }
+
+            if (this.Units > 0)
+            {
+                throw new DomainException("You can't disable an item when it's have some units.");
             }
 
             var @event = new ItemDisabled(this.Id);
@@ -110,7 +130,7 @@ namespace Warehouse.Domain.Domain
 
         public void Enable()
         {
-            if (this.IsEnable)
+            if (this.IsEnabled)
             {
                 throw new DomainException("You can't enble an item when it's already enable.");
             }

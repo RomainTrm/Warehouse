@@ -67,6 +67,7 @@
     <Compile Include="Events\UnitsAdded.cs" />
     <Compile Include="Events\UnitsRemoved.cs" />
     <Compile Include="ItemId.cs" />
+    <Compile Include="ReadModels\Repositories\IReadModelReadOnlyRepository.cs" />
     <Compile Include="ReadModels\Repositories\IReadModelRepository.cs" />
     <Compile Include="Domain\Item.cs" />
     <Compile Include="ReadModels\DisableItemsListView.cs" />

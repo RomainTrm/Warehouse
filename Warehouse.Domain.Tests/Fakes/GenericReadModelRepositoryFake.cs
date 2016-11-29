@@ -46,7 +46,12 @@ namespace Warehouse.Domain.Tests.Fakes
 
         private List<TData> GetDatas<TData>()
         {
-            return (List<TData>)this.readModels[typeof (TData)];
+            if (!this.readModels.ContainsKey(typeof(TData)))
+            {
+                this.readModels[typeof(TData)] = new List<TData>();
+            }
+
+            return (List<TData>)this.readModels[typeof(TData)];
         }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Warehouse.Domain.ReadModels.Repositories
+﻿namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public interface IReadModelRepository
+    public interface IReadModelRepository : IReadModelReadOnlyRepository
     {
         void Insert<TData>(TData data) where TData : IReadModel;
 
         void Update<TData>(TData data) where TData : IReadModel;
-
-        IEnumerable<TData> Get<TData>() where TData : IReadModel;
 
         void Delete<TData>(TData data) where TData : IReadModel;
     }

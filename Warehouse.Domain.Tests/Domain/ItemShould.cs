@@ -30,7 +30,7 @@ namespace Warehouse.Domain.Tests.Domain
             var itemCreated = new ItemCreated("item name");
             var item = new Item(new[] { itemCreated });
 
-            Check.That(item.IsEnable).IsTrue();
+            Check.That(item.IsEnabled).IsTrue();
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Warehouse.Domain.Tests.Domain
             var events = new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) };
             var item = new Item(events);
 
-            Check.That(item.IsEnable).IsFalse();
+            Check.That(item.IsEnabled).IsFalse();
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Warehouse.Domain.Tests.Domain
             var events = new Event[] { itemCreated, new ItemDisabled(itemCreated.Id), new ItemEnabled(itemCreated.Id) };
             var item = new Item(events);
 
-            Check.That(item.IsEnable).IsTrue();
+            Check.That(item.IsEnabled).IsTrue();
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Warehouse.Domain.Tests.Domain
 
             item.Disable();
 
-            Check.That(item.IsEnable).IsFalse();
+            Check.That(item.IsEnabled).IsFalse();
             Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemDisabled(itemCreated.Id));
         }
 
@@ -120,6 +120,15 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
+        public void ThrowsDomainExceptionWhenDiableAnItemWIthUnits()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 5) });
+
+            Check.ThatCode(() => item.Disable()).Throws<DomainException>();
+        }
+
+        [Test]
         public void AddToUncommitedEventsItemEnabledWhenEnable()
         {
             var itemCreated = new ItemCreated("item name");
@@ -127,7 +136,7 @@ namespace Warehouse.Domain.Tests.Domain
 
             item.Enable();
 
-            Check.That(item.IsEnable).IsTrue();
+            Check.That(item.IsEnabled).IsTrue();
             Check.That(item.UncommitedEvents.Single()).HasFieldsWithSameValues(new ItemEnabled(itemCreated.Id));
         }
 
@@ -166,6 +175,15 @@ namespace Warehouse.Domain.Tests.Domain
         }
 
         [Test]
+        public void ThrowsDomainExceptionWhenAddUnitsAndItemIsDisabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) });
+
+            Check.ThatCode(() => item.AddUnits(5)).Throws<DomainException>();
+        }
+
+        [Test]
         public void HaveCorrectUnitsQuantityWhenProvideUnitsRemoved()
         {
             var itemCreated = new ItemCreated("item name");
@@ -197,6 +215,15 @@ namespace Warehouse.Domain.Tests.Domain
             var item = new Item(new Event[] { itemCreated, new UnitsAdded(itemCreated.Id, 2) });
 
             Check.ThatCode(() => item.RemoveUnits(6)).Throws<DomainException>();
+        }
+
+        [Test]
+        public void ThrowsDomainExceptionWhenRemoveUnitsAndItemIsDisabled()
+        {
+            var itemCreated = new ItemCreated("item name");
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(itemCreated.Id) });
+
+            Check.ThatCode(() => item.RemoveUnits(5)).Throws<DomainException>();
         }
     }
 }

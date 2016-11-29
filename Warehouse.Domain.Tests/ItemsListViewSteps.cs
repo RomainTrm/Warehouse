@@ -135,8 +135,8 @@ namespace Warehouse.Domain.Tests
             this.SendCommand(new EnableItemCommand(new ItemId(this.ItemId)));
         }
 
-        [Then(@"It fail")]
-        public void ThenItFail()
+        [Then(@"It fails")]
+        public void ThenItFails()
         {
             Check.That(this.CatchedException).IsNotNull();
         }
@@ -171,7 +171,7 @@ namespace Warehouse.Domain.Tests
         }
         
         [Then(@"I can't see ""(.*)"" item in my disable items list")]
-        public void ThenICanTSeeItemInMyDisableItemsList(string p0)
+        public void ThenICanTSeeItemInMyDisableItemsList(string itemName)
         {
             var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
             Check.That(disableItems).IsEmpty();
