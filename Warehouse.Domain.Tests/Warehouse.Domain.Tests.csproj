@@ -62,6 +62,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AddRemoveUnits.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddRemoveUnits.feature</DependentUpon>
+    </Compile>
     <Compile Include="Commands\AddUnitsHandlerShould.cs" />
     <Compile Include="Commands\CommandBusShould.cs" />
     <Compile Include="Commands\CreateItemHandlerShould.cs" />
@@ -70,6 +75,11 @@
     <Compile Include="Commands\RemoveUnitsHandlerShould.cs" />
     <Compile Include="Commands\RenameItemHandlerShould.cs" />
     <Compile Include="Domain\ItemShould.cs" />
+    <Compile Include="EnableDisableItem.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnableDisableItem.feature</DependentUpon>
+    </Compile>
     <Compile Include="ReadModels\DisableItemsListViewShould.cs" />
     <Compile Include="ReadModels\ItemsListViewShould.cs" />
     <Compile Include="ReadModels\Repositories\ViewModelGeneratorShould.cs" />
@@ -77,12 +87,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fakes\EventStoreFake.cs" />
     <Compile Include="Fakes\GenericReadModelRepositoryFake.cs" />
-    <Compile Include="ItemsListView.feature.cs">
+    <Compile Include="RenameItem.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ItemsListView.feature</DependentUpon>
+      <DependentUpon>RenameItem.feature</DependentUpon>
     </Compile>
-    <Compile Include="ItemsListViewSteps.cs" />
+    <Compile Include="ItemsFeaturesSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj">
@@ -91,11 +101,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="ItemsListView.feature">
+    <None Include="AddRemoveUnits.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ItemsListView.feature.cs</LastGenOutput>
+      <LastGenOutput>AddRemoveUnits.feature.cs</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="EnableDisableItem.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>EnableDisableItem.feature.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="RenameItem.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RenameItem.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

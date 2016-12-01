@@ -21,8 +21,10 @@ using Warehouse.Domain.Tests.Fakes;
 namespace Warehouse.Domain.Tests
 {
     [Binding]
-    [Scope(Feature = "ItemsListView")]
-    public class ItemsListViewSteps
+    [Scope(Feature = "RenameItem")]
+    [Scope(Feature = "AddRemoveUnits")]
+    [Scope(Feature = "EnableDisableItem")]
+    public class ItemsFeaturesSteps
     {
         private ICommandBus CommandBus
         {
