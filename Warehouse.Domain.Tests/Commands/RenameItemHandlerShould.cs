@@ -21,7 +21,7 @@ namespace Warehouse.Domain.Tests.Commands
         public void Init()
         {
             this.eventStoreMock = new Mock<IEventStore>();
-            this.eventStoreMock.Setup(x => x.GetEventsById(this.itemCreated.Id)).Returns(new[] { this.itemCreated });
+            this.eventStoreMock.Setup(x => x.GetEventsById(this.itemCreated.Id)).Returns(new Event[] { this.itemCreated, new ItemDisabled(this.itemCreated.Id) });
             this.renameItemHandler = new RenameItemHandler(this.eventStoreMock.Object);
         }
 

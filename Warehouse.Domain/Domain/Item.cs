@@ -5,7 +5,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Domain
 {
-    public class Item : Aggregate
+    internal class Item : Aggregate
     {
         public Item(IEnumerable<Event> events)
             : base(events)
@@ -72,6 +72,11 @@ namespace Warehouse.Domain.Domain
 
         public void Rename(string newName)
         {
+            if (this.IsEnabled)
+            {
+                throw new DomainException("You can't rename an enabled item.");
+            }
+
             if (string.IsNullOrEmpty(newName))
             {
                 throw new DomainException("You can't set an empty name to an item.");

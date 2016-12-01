@@ -70,8 +70,8 @@
     <Compile Include="ReadModels\Repositories\IReadModelReadOnlyRepository.cs" />
     <Compile Include="ReadModels\Repositories\IReadModelRepository.cs" />
     <Compile Include="Domain\Item.cs" />
-    <Compile Include="ReadModels\DisableItemsListView.cs" />
-    <Compile Include="ReadModels\DisableItemView.cs" />
+    <Compile Include="ReadModels\DisabledItemsListView.cs" />
+    <Compile Include="ReadModels\DisabledItemView.cs" />
     <Compile Include="ReadModels\IReadModel.cs" />
     <Compile Include="ReadModels\ItemView.cs" />
     <Compile Include="ReadModels\ItemsListView.cs" />

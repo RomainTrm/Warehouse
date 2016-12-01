@@ -31,10 +31,10 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
         }
 
         [Test]
-        public void ChangeItemViewNameAndUpdateWhenHandleItemRenamed()
+        public void ChangeDisabledItemViewNameAndUpdateWhenHandleItemRenamed()
         {
-            var item = new ItemView(Guid.NewGuid(), "first name");
-            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+            var item = new DisabledItemView(Guid.NewGuid(), "first name");
+            this.repositoryMock.Setup(x => x.Get<DisabledItemView>()).Returns(new[] { item });
 
             this.viewModelGenerator.Handle(new ItemRenamed(item.Id.Value, "new name"));
 
@@ -51,14 +51,14 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             this.viewModelGenerator.Handle(new ItemDisabled(item.Id.Value));
 
             this.repositoryMock.Verify(x => x.Delete(item));
-            this.repositoryMock.Verify(x => x.Insert(new DisableItemView(item.Id.Value, "first name")));
+            this.repositoryMock.Verify(x => x.Insert(new DisabledItemView(item.Id.Value, "first name")));
         }
 
         [Test]
         public void RemoveDisableItemAndAddItemToItemsWhenHandlerItemEnabled()
         {
-            var disableItem = new DisableItemView(Guid.NewGuid(), "first name");
-            this.repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(new[] { disableItem });
+            var disableItem = new DisabledItemView(Guid.NewGuid(), "first name");
+            this.repositoryMock.Setup(x => x.Get<DisabledItemView>()).Returns(new[] { disableItem });
 
             this.viewModelGenerator.Handle(new ItemEnabled(disableItem.Id.Value));
 

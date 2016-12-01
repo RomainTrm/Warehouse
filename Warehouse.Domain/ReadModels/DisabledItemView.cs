@@ -2,9 +2,9 @@
 
 namespace Warehouse.Domain.ReadModels
 {
-    public class DisableItemView : IReadModel
+    public class DisabledItemView : IReadModel
     {
-        public DisableItemView(Guid id, string name)
+        public DisabledItemView(Guid id, string name)
         {
             this.Id = new ItemId(id);
             this.Name = name;
@@ -12,11 +12,11 @@ namespace Warehouse.Domain.ReadModels
 
         public ItemId Id { get; }
 
-        public string Name { get; }
+        public string Name { get; internal set; }
 
         public override bool Equals(object obj)
         {
-            return obj is DisableItemView && this.Equals((DisableItemView) obj);
+            return obj is DisabledItemView && this.Equals((DisabledItemView) obj);
         }
 
         public override int GetHashCode()
@@ -27,7 +27,7 @@ namespace Warehouse.Domain.ReadModels
             }
         }
 
-        private bool Equals(DisableItemView other)
+        private bool Equals(DisabledItemView other)
         {
             return Equals(this.Id, other.Id) && string.Equals(this.Name, other.Name);
         }

@@ -5,7 +5,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Domain
 {
-    public abstract class Aggregate
+    internal abstract class Aggregate
     {
         protected Aggregate(IEnumerable<Event> events)
         {

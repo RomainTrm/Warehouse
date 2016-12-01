@@ -9,12 +9,20 @@ Scenario: Create an item
 
 Scenario: Rename an item
 	Given I created an item "chair"
+	And I disabled it
 	When I rename it "table"
-	Then I can see "table" item in my items list
+	Then I can see "table" item in my disable items list
 	
 Scenario: Rename an item with an empty name
 	Given I created an item "chair"
+	And I disabled it
 	When I rename it ""
+	Then It fails
+	And I can see "chair" item in my disable items list
+
+Scenario: Rename an item without disabling it before
+	Given I created an item "chair"
+	When I rename it "table"
 	Then It fails
 	And I can see "chair" item in my items list
 

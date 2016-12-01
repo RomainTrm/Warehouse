@@ -166,14 +166,14 @@ namespace Warehouse.Domain.Tests
         [Then(@"I can see ""(.*)"" item in my disable items list")]
         public void ThenICanSeeItemInMyDisableItemsList(string itemName)
         {
-            var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
+            var disableItems = new DisabledItemsListView(this.ReadModelRepository).Items;
             Check.That(disableItems.Single().Name).Equals(itemName);
         }
         
         [Then(@"I can't see ""(.*)"" item in my disable items list")]
         public void ThenICanTSeeItemInMyDisableItemsList(string itemName)
         {
-            var disableItems = new DisableItemsListView(this.ReadModelRepository).Items;
+            var disableItems = new DisabledItemsListView(this.ReadModelRepository).Items;
             Check.That(disableItems).IsEmpty();
         }
 

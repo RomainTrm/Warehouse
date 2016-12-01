@@ -12,7 +12,7 @@ namespace Warehouse.Domain.ReadModels
 
         public ItemId Id { get; }
 
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         public uint Units { get; internal set; }
 

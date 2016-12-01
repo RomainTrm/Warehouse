@@ -21,7 +21,7 @@ namespace Warehouse.Domain.ReadModels.Repositories
 
         public void Handle(ItemRenamed @event)
         {
-            var itemView = this.readModelRepository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
+            var itemView = this.readModelRepository.Get<DisabledItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Name = @event.NewName;
             this.readModelRepository.Update(itemView);
         }
@@ -30,12 +30,12 @@ namespace Warehouse.Domain.ReadModels.Repositories
         {
             var itemView = this.readModelRepository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             this.readModelRepository.Delete(itemView);
-            this.readModelRepository.Insert(new DisableItemView(itemView.Id.Value, itemView.Name));
+            this.readModelRepository.Insert(new DisabledItemView(itemView.Id.Value, itemView.Name));
 	    }
 
         public void Handle(ItemEnabled @event)
         {
-            var disableItemView = this.readModelRepository.Get<DisableItemView>().Single(x => x.Id.Value == @event.Id);
+            var disableItemView = this.readModelRepository.Get<DisabledItemView>().Single(x => x.Id.Value == @event.Id);
             this.readModelRepository.Delete(disableItemView);
             this.readModelRepository.Insert(new ItemView(disableItemView.Id.Value, disableItemView.Name));
         }

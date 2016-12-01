@@ -79,7 +79,7 @@ namespace Warehouse.Domain.Tests.Domain
         public void AddToUncommitedEventsItemRenamedWhenRename()
         {
             var itemCreated = new ItemCreated("item name");
-            var item = new Item(new[] { itemCreated });
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(It.IsAny<Guid>()) });
 
             item.Rename("new name");
 
@@ -93,9 +93,21 @@ namespace Warehouse.Domain.Tests.Domain
         public void ThrowsDomainExceptionWhenRenameWithAnName(string newName)
         {
             var itemCreated = new ItemCreated("item name");
-            var item = new Item(new[] { itemCreated });
+            var item = new Item(new Event[] { itemCreated, new ItemDisabled(It.IsAny<Guid>()) });
 
             Check.ThatCode(() => item.Rename(newName)).Throws<DomainException>();
+        }
+
+        [Test]
+        public void ThrowDomainExceptionWhenRenameAnEnabledItem()
+        {
+            var itemCreated = new ItemCreated("item name");
+
+            var events = new Event[] { itemCreated };
+            var item = new Item(events);
+
+            Check.That(item.IsEnabled).IsTrue();
+            Check.ThatCode(() => item.Rename("another name")).Throws<DomainException>();
         }
 
         [Test]

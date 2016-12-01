@@ -15,10 +15,10 @@ namespace Warehouse.Domain.Tests.ReadModels
         {
             var itemId = Guid.NewGuid();
             var repositoryMock = new Mock<IReadModelReadOnlyRepository>();
-            repositoryMock.Setup(x => x.Get<DisableItemView>()).Returns(new[] { new DisableItemView(itemId, "chair") });
+            repositoryMock.Setup(x => x.Get<DisabledItemView>()).Returns(new[] { new DisabledItemView(itemId, "chair") });
 
-            var disableItemsListView = new DisableItemsListView(repositoryMock.Object);
-            Check.That(disableItemsListView.Items).ContainsExactly(new DisableItemView(itemId, "chair"));
+            var disableItemsListView = new DisabledItemsListView(repositoryMock.Object);
+            Check.That(disableItemsListView.Items).ContainsExactly(new DisabledItemView(itemId, "chair"));
         }
     }
 }
