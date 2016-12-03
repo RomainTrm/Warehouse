@@ -26,7 +26,6 @@ namespace Warehouse.Domain.Tests.Domain
         [Test]
         public void BeEnableWhenProvideItemCreated()
         {
-
             var itemCreated = new ItemCreated("item name");
             var item = new Item(new[] { itemCreated });
 

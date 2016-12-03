@@ -6,15 +6,11 @@ using Warehouse.Domain.Events.Bus;
 
 namespace Warehouse.DataAccess.Events
 {
-    public class EventStoreFake : IEventStore
+    public class EventStoreFake : IEventStoreRegistration
     {
-        private readonly IEventBus eventBus;
         private readonly List<Event> events = new List<Event>();
 
-        public EventStoreFake(IEventBus eventBus)
-        {
-            this.eventBus = eventBus;
-        }
+        private IEventBus eventBus;
 
         public void Save(Event @event)
         {
@@ -33,6 +29,16 @@ namespace Warehouse.DataAccess.Events
         public IEnumerable<Event> GetEventsById(Guid id)
         {
             return this.events.Where(evt => evt.Id.Equals(id)).ToArray();
+        }
+
+        public void SetEventBusToPublish(IEventBus eventBus)
+        {
+            if (this.eventBus != null)
+            {
+                throw new InvalidOperationException("EventBus is already initialized.");
+            }
+
+            this.eventBus = eventBus;
         }
     }
 }

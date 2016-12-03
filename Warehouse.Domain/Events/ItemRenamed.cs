@@ -3,7 +3,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Events
 {
-    public class ItemRenamed : Event
+    internal class ItemRenamed : Event
     {
         public ItemRenamed(Guid itemId, string newName)
             : base(itemId)

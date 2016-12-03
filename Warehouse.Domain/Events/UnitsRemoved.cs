@@ -3,7 +3,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Events
 {
-    public class UnitsRemoved : Event
+    internal class UnitsRemoved : Event
     {
         public UnitsRemoved(Guid id, uint units)
             : base(id)

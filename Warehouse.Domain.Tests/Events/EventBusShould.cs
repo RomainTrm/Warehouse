@@ -79,7 +79,7 @@ namespace Warehouse.Domain.Tests.Events
         }
     }
 
-    public class EventHandlerFake : IEventHandler<Event1Fake>, IEventHandler<Event2Fake>
+    internal class EventHandlerFake : IEventHandler<Event1Fake>, IEventHandler<Event2Fake>
     {
         private readonly Mock<IEventHandler<Event1Fake>> mockHandler1;
         private readonly Mock<IEventHandler<Event2Fake>> mockHandler2;

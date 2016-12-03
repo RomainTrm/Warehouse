@@ -5,7 +5,12 @@ namespace Warehouse.Domain.ReadModels
 {
     public class ItemsListView
     {
-        public ItemsListView(IReadModelReadOnlyRepository readOnlyModelRepository)
+        public ItemsListView()
+            : this(Bootstrapper.ReadModelRepository)
+        { 
+        }
+
+        internal ItemsListView(IReadModelReadOnlyRepository readOnlyModelRepository)
         {
             this.Items = readOnlyModelRepository.Get<ItemView>();
         }

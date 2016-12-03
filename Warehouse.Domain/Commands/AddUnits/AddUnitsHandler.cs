@@ -4,7 +4,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Commands.AddUnits
 {
-    public class AddUnitsHandler : ICommandHandler<AddUnitsCommand>
+    internal class AddUnitsHandler : ICommandHandler<AddUnitsCommand>
     {
         private readonly IEventStore eventStore;
 

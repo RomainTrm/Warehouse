@@ -4,7 +4,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Commands.RemoveUnits
 {
-    public class RemoveUnitsHandler : ICommandHandler<RemoveUnitsCommand>
+    internal class RemoveUnitsHandler : ICommandHandler<RemoveUnitsCommand>
     {
         private readonly IEventStore eventStore;
 

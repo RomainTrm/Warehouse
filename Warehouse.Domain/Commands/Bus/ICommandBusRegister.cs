@@ -2,8 +2,8 @@ using Warehouse.Domain.Commands.Base;
 
 namespace Warehouse.Domain.Commands.Bus
 {
-    public interface ICommandBusRegister
+    internal interface ICommandBusRegister
     {
-        void RegsiterHandler<TCommand>(ICommandHandler<TCommand> commandHandler) where TCommand : ICommand;
+        void RegisterHandler<TCommand>(ICommandHandler<TCommand> commandHandler) where TCommand : ICommand;
     }
 }

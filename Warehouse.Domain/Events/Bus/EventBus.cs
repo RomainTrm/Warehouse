@@ -5,7 +5,7 @@ using Warehouse.Domain.Events.Exceptions;
 
 namespace Warehouse.Domain.Events.Bus
 {
-    public class EventBus : IEventBus, IEventBusRegister
+    internal class EventBus : IEventBus, IEventBusRegister
     {
         private readonly Dictionary<Type, List<Action<Event>>> handlers = new Dictionary<Type, List<Action<Event>>>();
 

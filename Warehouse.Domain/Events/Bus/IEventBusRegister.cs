@@ -2,7 +2,7 @@
 
 namespace Warehouse.Domain.Events.Bus
 {
-    public interface IEventBusRegister
+    internal interface IEventBusRegister
     {
         void Register<TEvent>(IEventHandler<TEvent> eventHandler)
             where TEvent : Event;

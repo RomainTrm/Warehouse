@@ -72,12 +72,12 @@ namespace Warehouse.Domain.Tests
             this.EventStore = new EventStoreFake(eventBus);
 
             var commandBus = new CommandBus();
-            commandBus.RegsiterHandler(new CreateItemHandler(this.EventStore));
-            commandBus.RegsiterHandler(new RenameItemHandler(this.EventStore));
-            commandBus.RegsiterHandler(new AddUnitsHandler(this.EventStore));
-            commandBus.RegsiterHandler(new RemoveUnitsHandler(this.EventStore));
-            commandBus.RegsiterHandler(new DisableItemHandler(this.EventStore));
-            commandBus.RegsiterHandler(new EnableItemHandler(this.EventStore));
+            commandBus.RegisterHandler(new CreateItemHandler(this.EventStore));
+            commandBus.RegisterHandler(new RenameItemHandler(this.EventStore));
+            commandBus.RegisterHandler(new AddUnitsHandler(this.EventStore));
+            commandBus.RegisterHandler(new RemoveUnitsHandler(this.EventStore));
+            commandBus.RegisterHandler(new DisableItemHandler(this.EventStore));
+            commandBus.RegisterHandler(new EnableItemHandler(this.EventStore));
             this.CommandBus = commandBus;
         }
 

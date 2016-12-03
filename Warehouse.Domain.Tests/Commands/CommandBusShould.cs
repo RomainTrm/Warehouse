@@ -14,7 +14,7 @@ namespace Warehouse.Domain.Tests.Commands
         public void ThrowsCommandBusExceptionWhenRegisterNullHandler()
         {
             var commandBus = new CommandBus();
-            Check.ThatCode(() => commandBus.RegsiterHandler((ICommandHandler<CommandFake1>) null))
+            Check.ThatCode(() => commandBus.RegisterHandler((ICommandHandler<CommandFake1>) null))
                 .Throws<CommandBusException>();
         }
 
@@ -25,9 +25,9 @@ namespace Warehouse.Domain.Tests.Commands
             var handler2Mock = new Mock<ICommandHandler<CommandFake1>>();
 
             var commandBus = new CommandBus();
-            commandBus.RegsiterHandler(handler1Mock.Object);
+            commandBus.RegisterHandler(handler1Mock.Object);
 
-            Check.ThatCode(() => commandBus.RegsiterHandler(handler2Mock.Object))
+            Check.ThatCode(() => commandBus.RegisterHandler(handler2Mock.Object))
                 .Throws<CommandBusException>();
         }
 
@@ -38,8 +38,8 @@ namespace Warehouse.Domain.Tests.Commands
             var handler2Mock = new Mock<ICommandHandler<CommandFake2>>();
 
             var commandBus = new CommandBus();
-            commandBus.RegsiterHandler(handler1Mock.Object);
-            commandBus.RegsiterHandler(handler2Mock.Object);
+            commandBus.RegisterHandler(handler1Mock.Object);
+            commandBus.RegisterHandler(handler2Mock.Object);
 
             commandBus.Send(new CommandFake1());
 
@@ -61,7 +61,7 @@ namespace Warehouse.Domain.Tests.Commands
             handler1Mock.Setup(x => x.Handle(It.IsAny<CommandFake1>())).Throws(new CommandHandlerException("Error"));
 
             var commandBus = new CommandBus();
-            commandBus.RegsiterHandler(handler1Mock.Object);
+            commandBus.RegisterHandler(handler1Mock.Object);
 
             Check.ThatCode(() => commandBus.Send(new CommandFake1())).Throws<CommandHandlerException>();
         }

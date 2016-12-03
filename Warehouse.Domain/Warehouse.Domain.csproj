@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\AddUnits\AddUnitsCommand.cs" />
     <Compile Include="Commands\AddUnits\AddUnitsHandler.cs" />
     <Compile Include="Commands\Bus\CommandBus.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Commands\RenameItem\RenameItemHandler.cs" />
     <Compile Include="Domain\Aggregate.cs" />
     <Compile Include="Domain\DomainException.cs" />
+    <Compile Include="Events\Base\IEventStoreRegistration.cs" />
     <Compile Include="Events\ItemDisabled.cs" />
     <Compile Include="Events\ItemEnabled.cs" />
     <Compile Include="Events\ItemRenamed.cs" />

@@ -5,11 +5,11 @@ using Warehouse.Domain.Commands.Exceptions;
 
 namespace Warehouse.Domain.Commands.Bus
 {
-    public class CommandBus : ICommandBus, ICommandBusRegister
+    internal class CommandBus : ICommandBus, ICommandBusRegister
     {
         private readonly List<ICommandHandler> handlers = new List<ICommandHandler>();
 
-        public void RegsiterHandler<TCommand>(ICommandHandler<TCommand> commandHandler)
+        public void RegisterHandler<TCommand>(ICommandHandler<TCommand> commandHandler)
             where TCommand : ICommand
         {
             if (commandHandler == null)

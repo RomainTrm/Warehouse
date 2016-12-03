@@ -4,7 +4,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Commands.EnableItem
 {
-    public class EnableItemHandler : ICommandHandler<EnableItemCommand>
+    internal class EnableItemHandler : ICommandHandler<EnableItemCommand>
     {
         private readonly IEventStore eventStore;
 

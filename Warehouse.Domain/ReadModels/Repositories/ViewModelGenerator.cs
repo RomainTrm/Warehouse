@@ -4,7 +4,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.ReadModels.Repositories
 {
-    public class ViewModelGenerator : IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>, IEventHandler<ItemDisabled>, IEventHandler<ItemEnabled>
+    internal class ViewModelGenerator : IEventHandler<ItemCreated>, IEventHandler<ItemRenamed>, IEventHandler<UnitsAdded>, IEventHandler<UnitsRemoved>, IEventHandler<ItemDisabled>, IEventHandler<ItemEnabled>
     {
         private readonly IReadModelRepository readModelRepository;
 

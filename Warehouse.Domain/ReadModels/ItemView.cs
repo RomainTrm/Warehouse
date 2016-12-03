@@ -4,7 +4,7 @@ namespace Warehouse.Domain.ReadModels
 {
     public class ItemView : IReadModel
     {
-        public ItemView(Guid itemId, string itemName)
+        internal ItemView(Guid itemId, string itemName)
         {
             this.Id = new ItemId(itemId);
             this.Name = itemName;

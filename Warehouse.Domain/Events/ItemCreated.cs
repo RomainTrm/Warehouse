@@ -3,7 +3,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Events
 {
-    public class ItemCreated : Event
+    internal class ItemCreated : Event
     {
         public ItemCreated(string name)
             : base(Guid.NewGuid())

@@ -5,7 +5,7 @@ using Warehouse.Domain.Events.Base;
 
 namespace Warehouse.Domain.Commands.CreateItem
 {
-    public class CreateItemHandler : ICommandHandler<CreateItemCommand>
+    internal class CreateItemHandler : ICommandHandler<CreateItemCommand>
     {
         private readonly IEventStore eventStore;
 

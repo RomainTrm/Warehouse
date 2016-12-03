@@ -4,7 +4,7 @@ namespace Warehouse.Domain.ReadModels
 {
     public class DisabledItemView : IReadModel
     {
-        public DisabledItemView(Guid id, string name)
+        internal DisabledItemView(Guid id, string name)
         {
             this.Id = new ItemId(id);
             this.Name = name;
