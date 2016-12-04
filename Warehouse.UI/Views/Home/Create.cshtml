@@ -1,0 +1,31 @@
+﻿@model Warehouse.UI.Models.ItemName
+
+@{
+    ViewBag.Title = "Create new item";
+}
+
+<h2>Create new item</h2>
+
+@using (Html.BeginForm("Create", "Create", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Create item</h4>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.TextBoxFor(itemName => itemName.Value)
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

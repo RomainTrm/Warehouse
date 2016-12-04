@@ -10,4 +10,5 @@
 /_NCrunch_Warehouse/**/*
 /*.v2.ncrunchsolution
 /*.ncrunchsolution.user
+/**/*.csproj.user
 /packages

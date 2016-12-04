@@ -14,11 +14,6 @@ namespace Warehouse.DataAccess.ReadModels
         public void Insert<TData>(TData data)
              where TData : IReadModel
         {
-            if (!this.readModels.ContainsKey(typeof (TData)))
-            {
-                this.readModels[typeof(TData)] = new List<TData>();
-            }
-
             var datas = this.GetDatas<TData>();
             datas.Add(data);
         }
@@ -46,6 +41,11 @@ namespace Warehouse.DataAccess.ReadModels
 
         private List<TData> GetDatas<TData>()
         {
+            if (!this.readModels.ContainsKey(typeof (TData)))
+            {
+                this.readModels[typeof(TData)] = new List<TData>();
+            }
+
             return (List<TData>)this.readModels[typeof (TData)];
         }
     }
