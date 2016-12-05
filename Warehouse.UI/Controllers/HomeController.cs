@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using Warehouse.Domain.ReadModels;
 using Warehouse.UI.Models;
 
@@ -15,7 +17,15 @@ namespace Warehouse.UI.Controllers
 
         public ActionResult Create()
         {
-            return this.View("Create", new ItemName());
+            this.ViewData.Model = new ItemName();
+            return this.View();
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            this.ViewData.Model = new ItemsListView().Items
+                                                     .Single(item => Equals(item.Id.Value, id));
+            return this.View();
         }
     }
 }

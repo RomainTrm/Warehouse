@@ -9,8 +9,8 @@ namespace Warehouse.Domain
             this.Value = idValue;
         }
 
-        internal Guid Value { get; }
-
+        public Guid Value { get; }
+        
         public override bool Equals(object obj)
         {
             return obj is ItemId && this.Equals((ItemId)obj);
