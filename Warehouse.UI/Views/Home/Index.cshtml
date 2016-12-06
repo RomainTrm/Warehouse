@@ -1,5 +1,4 @@
-﻿@using Warehouse.UI.Models
-@model Warehouse.Domain.ReadModels.ItemsListView
+﻿@model Warehouse.Domain.ReadModels.ItemsListView
 
 @{
     ViewBag.Title = "Index";
@@ -22,11 +21,13 @@
             <td>@item.Name</td>
             <td>@item.Units</td>
             <td>
-                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
                 @Html.ActionLink("Details", "Details", new { id = item.Id.Value })
-                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
     }
 
 </table>
+
+<p>
+    @Html.ActionLink("Show disabled items", "DisabledItems")
+</p>

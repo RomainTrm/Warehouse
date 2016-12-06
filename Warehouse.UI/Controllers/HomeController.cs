@@ -27,5 +27,11 @@ namespace Warehouse.UI.Controllers
             this.ViewData.Model = new ItemDetailsViewModel { Item = item };
             return this.View();
         }
+
+        public ActionResult DisabledItems()
+        {
+            this.ViewData.Model = new DisabledItemsListView();
+            return this.View();
+        }
     }
 }

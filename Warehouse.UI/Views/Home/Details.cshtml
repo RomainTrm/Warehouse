@@ -13,7 +13,6 @@
         <dt>
             Name
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Item.Name)
         </dd>
@@ -21,7 +20,6 @@
         <dt>
             Quantity
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Item.Units)
         </dd>
@@ -29,7 +27,6 @@
         <dt>
             Add
         </dt>
-
         <dd>
             @using (Html.BeginForm("AddUnits", "Details", FormMethod.Post))
             {
@@ -48,7 +45,6 @@
         <dt>
             Remove
         </dt>
-
         <dd>
             @using (Html.BeginForm("RemoveUnits", "Details", FormMethod.Post))
             {
