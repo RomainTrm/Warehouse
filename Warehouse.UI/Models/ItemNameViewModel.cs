@@ -1,6 +1,6 @@
 ﻿namespace Warehouse.UI.Models
 {
-    public class ItemName
+    public class ItemNameViewModel
     {
         public string Value { get; set; }
     }

@@ -17,14 +17,14 @@ namespace Warehouse.UI.Controllers
 
         public ActionResult Create()
         {
-            this.ViewData.Model = new ItemName();
+            this.ViewData.Model = new ItemNameViewModel();
             return this.View();
         }
 
         public ActionResult Details(Guid id)
         {
-            this.ViewData.Model = new ItemsListView().Items
-                                                     .Single(item => Equals(item.Id.Value, id));
+            var item = new ItemsListView().GetItem(id);
+            this.ViewData.Model = new ItemDetailsViewModel { Item = item };
             return this.View();
         }
     }

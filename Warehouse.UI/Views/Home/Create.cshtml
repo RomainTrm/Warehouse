@@ -1,4 +1,4 @@
-﻿@model Warehouse.UI.Models.ItemName
+﻿@model Warehouse.UI.Models.ItemNameViewModel
 
 @{
     ViewBag.Title = "Create new item";
@@ -16,7 +16,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @Html.TextBoxFor(itemName => itemName.Value)
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default"/>
             </div>
         </div>
     </div>

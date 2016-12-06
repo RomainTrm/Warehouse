@@ -17,7 +17,7 @@ namespace Warehouse.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ItemName itemName)
+        public ActionResult Create(ItemNameViewModel itemName)
         {
             this.commandBus.Send(new CreateItemCommand(itemName.Value));
             return this.RedirectToAction("Index", "Home");

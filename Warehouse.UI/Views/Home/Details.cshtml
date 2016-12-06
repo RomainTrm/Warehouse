@@ -1,7 +1,7 @@
-﻿@model Warehouse.Domain.ReadModels.ItemView
+﻿@model Warehouse.UI.Models.ItemDetailsViewModel
 
 @{
-    ViewBag.Title = Model.Name + " details";
+    ViewBag.Title = Model.Item.Name + " details";
 }
 
 <h2>ItemDetails</h2>
@@ -9,13 +9,13 @@
 <div>
     <h4>ItemView</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl>
         <dt>
             Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Item.Name)
         </dd>
 
         <dt>
@@ -23,8 +23,50 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Units)
+            @Html.DisplayFor(model => model.Item.Units)
         </dd>
+
+        <dt>
+            Add
+        </dt>
+
+        <dd>
+            @using (Html.BeginForm("AddUnits", "Details", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.HiddenFor(item => item.Id)
+                        @Html.TextBoxFor(item => item.Quantity)
+                        <input type="submit" value="Add" class="btn btn-default"/>
+                    </div>
+                </div>
+            }
+        </dd>
+
+        <dt>
+            Remove
+        </dt>
+
+        <dd>
+            @using (Html.BeginForm("RemoveUnits", "Details", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.HiddenFor(item => item.Id)
+                        @Html.TextBoxFor(item => item.Quantity)
+                        <input type="submit" value="Remove" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </dd>
+
+        <dt>
+            @Html.ActionLink("Disable", "Disable", "Details", new { id = Model.Item.Id.Value }, null)
+        </dt>
 
     </dl>
 </div>
