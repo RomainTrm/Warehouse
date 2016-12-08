@@ -23,24 +23,45 @@ namespace Warehouse.UI.Controllers
         [HttpPost]
         public ActionResult AddUnits(ItemDetailsViewModel itemDetailsViewModel)
         {
-            var item = new ItemsListView().GetItem(itemDetailsViewModel.Id);
-            this.commandBus.Send(new AddUnitsCommand(item.Id, itemDetailsViewModel.Quantity));
-            return this.RedirectToAction("Index", "Home");
+            try
+            {
+                var item = new ItemsListView().GetItem(itemDetailsViewModel.Id);
+                this.commandBus.Send(new AddUnitsCommand(item.Id, itemDetailsViewModel.Quantity));
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction("Error", "Error", new ErrorViewModel(ex.Message));
+            }
         }
 
         [HttpPost]
         public ActionResult RemoveUnits(ItemDetailsViewModel itemDetailsViewModel)
         {
-            var item = new ItemsListView().GetItem(itemDetailsViewModel.Id);
-            this.commandBus.Send(new RemoveUnitsCommand(item.Id, itemDetailsViewModel.Quantity));
-            return this.RedirectToAction("Index", "Home");
+            try
+            {
+                var item = new ItemsListView().GetItem(itemDetailsViewModel.Id);
+                this.commandBus.Send(new RemoveUnitsCommand(item.Id, itemDetailsViewModel.Quantity));
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction("Error", "Error", new ErrorViewModel(ex.Message));
+            }
         }
 
         public ActionResult Disable(Guid id)
         {
-            var item = new ItemsListView().GetItem(id);
-            this.commandBus.Send(new DisableItemCommand(item.Id));
-            return this.RedirectToAction("Index", "Home");
+            try
+            {
+                var item = new ItemsListView().GetItem(id);
+                this.commandBus.Send(new DisableItemCommand(item.Id));
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction("Error", "Error", new ErrorViewModel(ex.Message));
+            }
         }
     }
 }

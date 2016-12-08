@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using Warehouse.Domain.ReadModels;
 using Warehouse.UI.Models;

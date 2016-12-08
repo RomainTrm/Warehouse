@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Warehouse.Domain;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.CreateItem;
@@ -19,8 +20,15 @@ namespace Warehouse.UI.Controllers
         [HttpPost]
         public ActionResult Create(ItemNameViewModel itemName)
         {
-            this.commandBus.Send(new CreateItemCommand(itemName.Value));
-            return this.RedirectToAction("Index", "Home");
+            try
+            {
+                this.commandBus.Send(new CreateItemCommand(itemName.Value));
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction("Error", "Error", new ErrorViewModel(ex.Message));
+            }
         }
     }
 }

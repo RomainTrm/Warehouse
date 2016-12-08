@@ -4,6 +4,7 @@ using Warehouse.Domain;
 using Warehouse.Domain.Commands.Bus;
 using Warehouse.Domain.Commands.EnableItem;
 using Warehouse.Domain.ReadModels;
+using Warehouse.UI.Models;
 
 namespace Warehouse.UI.Controllers
 {
@@ -19,9 +20,16 @@ namespace Warehouse.UI.Controllers
 
         public ActionResult Enable(Guid id)
         {
-            var item = new DisabledItemsListView().GetItem(id);
-            this.commandBus.Send(new EnableItemCommand(item.Id));
-            return this.RedirectToAction("Index", "Home");
+            try
+            {
+                var item = new DisabledItemsListView().GetItem(id);
+                this.commandBus.Send(new EnableItemCommand(item.Id));
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction("Error", "Error", new ErrorViewModel(ex.Message));
+            }
         }
     }
 }
