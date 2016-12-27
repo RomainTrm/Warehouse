@@ -17,6 +17,12 @@
             @Html.DisplayFor(model => model.Item.Units)
         </dd>
 
+        <dt>History</dt>
+        @foreach (var row in Model.Item.History)
+        {
+            <dd>@row</dd>
+        }
+
         <dt>
             Add
         </dt>

@@ -179,6 +179,14 @@ namespace Warehouse.Domain.Tests
             Check.That(disableItems).IsEmpty();
         }
 
+        [Then(@"It contains ""(.*)"" in the history")]
+        public void ThenItContainsInTheHistory(string historyRow)
+        {
+            var items = new ItemsListView(this.ReadModelRepository).Items;
+            var item = items.Single(i => i.Id.Equals(new ItemId(this.ItemId)));
+            Check.That(item.History.Any(row => row.Contains(historyRow))).IsTrue();
+        }
+
         private void SendCommand<TCommand>(TCommand command)
             where TCommand : ICommand
         {

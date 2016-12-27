@@ -44,6 +44,7 @@ namespace Warehouse.Domain.ReadModels.Repositories
         {
             var itemView = this.readModelRepository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Units += @event.Units;
+            itemView.AddHistoryRow($"{@event.Horodate:G} - Add {@event.Units} unit(s).");
             this.readModelRepository.Update(itemView);
         }
 
@@ -51,6 +52,7 @@ namespace Warehouse.Domain.ReadModels.Repositories
         {
             var itemView = this.readModelRepository.Get<ItemView>().Single(x => x.Id.Value == @event.Id);
             itemView.Units -= @event.Units;
+            itemView.AddHistoryRow($"{@event.Horodate:G} - Remove {@event.Units} unit(s).");
             this.readModelRepository.Update(itemView);
         }
     }

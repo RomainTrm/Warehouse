@@ -7,8 +7,11 @@ namespace Warehouse.Domain.Events.Base
         protected Event(Guid id)
         {
             this.Id = id;
+            this.Horodate = DateTime.Now;
         }
 
         public Guid Id { get; }
+
+        public DateTime Horodate { get; }
     }
 }

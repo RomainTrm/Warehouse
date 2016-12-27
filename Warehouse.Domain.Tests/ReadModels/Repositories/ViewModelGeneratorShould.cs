@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Moq;
 using NFluent;
 using NUnit.Framework;
@@ -74,7 +75,19 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
 
             this.viewModelGenerator.Handle(new UnitsAdded(item.Id.Value, 9));
 
-            Check.That(item.Units).Equals((uint) 14);
+            Check.That(item.Units).Equals((uint)14);
+            this.repositoryMock.Verify(x => x.Update(item));
+        }
+
+        [Test]
+        public void AddHistoryToItemViewAndUpdateWhenHandleUnitsAdded()
+        {
+            var item = new ItemView(Guid.NewGuid(), "first name") { Units = 5 };
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+
+            this.viewModelGenerator.Handle(new UnitsAdded(item.Id.Value, 9));
+
+            Check.That(item.History.Any(row => row.Contains(" - Add 9 unit(s)."))).IsTrue();
             this.repositoryMock.Verify(x => x.Update(item));
         }
 
@@ -87,6 +100,18 @@ namespace Warehouse.Domain.Tests.ReadModels.Repositories
             this.viewModelGenerator.Handle(new UnitsRemoved(item.Id.Value, 3));
 
             Check.That(item.Units).Equals((uint)2);
+            this.repositoryMock.Verify(x => x.Update(item));
+        }
+
+        [Test]
+        public void AddHistoryToItemViewAndUpdateWhenHandleUnitsRemoved()
+        {
+            var item = new ItemView(Guid.NewGuid(), "first name") { Units = 5 };
+            this.repositoryMock.Setup(x => x.Get<ItemView>()).Returns(new[] { item });
+
+            this.viewModelGenerator.Handle(new UnitsRemoved(item.Id.Value, 3));
+
+            Check.That(item.History.Any(row => row.Contains(" - Remove 3 unit(s)."))).IsTrue();
             this.repositoryMock.Verify(x => x.Update(item));
         }
     }
