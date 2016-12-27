@@ -4,19 +4,12 @@
     ViewBag.Title = Model.Item.Name + " details";
 }
 
-<h2>ItemDetails</h2>
+<h2>@Html.DisplayFor(model => model.Item.Name)</h2>
 
 <div>
-    <h4>ItemView</h4>
+    <h4>Details</h4>
     <hr />
     <dl>
-        <dt>
-            Name
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Item.Name)
-        </dd>
-
         <dt>
             Quantity
         </dt>

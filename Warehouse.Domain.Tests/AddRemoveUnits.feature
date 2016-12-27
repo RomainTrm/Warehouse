@@ -5,7 +5,7 @@
 	
 Scenario: Add units to an item
 	Given I created an item "chair"
-	And I added it 5 units
+	And I added 5 units
 	When I add 3 units
 	Then I can see "chair" items with 8 units in my items list
 	
@@ -17,13 +17,13 @@ Scenario: Add units to an disabled item
 
 Scenario: Remove units to an item
 	Given I created an item "chair"
-	And I added it 5 units
+	And I added 5 units
 	When I remove 3 units
 	Then I can see "chair" items with 2 units in my items list
 
 Scenario: Remove too much units to an item
 	Given I created an item "chair"
-	And I added it 5 units
+	And I added 5 units
 	When I remove 7 units
 	Then It fails
 	And I can see "chair" items with 5 units in my items list

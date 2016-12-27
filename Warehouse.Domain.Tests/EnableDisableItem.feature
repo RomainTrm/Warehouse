@@ -11,7 +11,7 @@ Scenario: Disable an item
 	
 Scenario: Disable an item with units
 	Given I created an item "chair"
-	And I added it 5 units
+	And I added 5 units
 	When I disable it
 	Then It fails
 	And I can see "chair" items with 5 units in my items list

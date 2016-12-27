@@ -89,8 +89,8 @@ namespace Warehouse.Domain.Tests
             this.EventStore.Save(itemCreated);
         }
 
-        [Given(@"I added it (.*) units")]
-        public void GivenIAddedItUnits(uint units)
+        [Given(@"I added (.*) units")]
+        public void GivenIAddedUnits(uint units)
         {
             this.EventStore.Save(new UnitsAdded(this.ItemId, units));
         }

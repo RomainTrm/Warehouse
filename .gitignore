@@ -5,7 +5,7 @@
 /**/obj/**/*
 /**/bin/**/*
 /**/*.v2.ncrunchproject
-/.vs/**/v14
+/.vs/**/*
 /**.Tests/**/*
 /_NCrunch_Warehouse/**/*
 /*.v2.ncrunchsolution
